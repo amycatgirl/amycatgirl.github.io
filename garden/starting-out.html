@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preload" type="text/css" as="style" href="/assets/noto.css">
+        <link rel="preload" type="font/ttf" as="font" href="/assets/NotoEmoji-Light.ttf">
+        <link rel="preload" type="font/ttf" as="font" href="/assets/NotoColorEmoji-Regular.ttf">
+        <title>Amy</title>
+    </head>
+    <body>
+        <div class="center-everything">
+            <h1>Starting out</h1>
+            
+            <p>hi hi hello hi welcome</p>
+            <p>
+                this is my garden <br />
+                i grow things here <br />
+                im starting out
+            </p>
+            <p>I've had a problem, i can't finish what i've started</p>
+            <p>
+                is there a end <br />
+                is there a start <br />
+                no wait there is a start <br />
+                so what am i missing <br />
+                should i finish things
+            </p>
+            
+            <p>maybe i should, maybe i dont</p>
+            <p>old things die out, new things grow on their place</p>
+            <p>
+                this is a garden, everything is organic <br />
+                it will stay that way <br />
+                so if it dies <br />
+                there is nothing to worry about <br />
+                i think
+            </p>
+            
+            <p>lets see how this goes, maybe this goes well</p>
+            <p>maybe it doesn't, lets see how this ends up</p>
+            
+            <span>Go back to <a class="link blue" href="/garden">the start</a></span>
+        </div>
+    </body>
+    <style>
+        .smaller {
+            font-size: .5em;
+            opacity: 75%;
+        }
+        
+        div.center-everything {
+            max-width: 50%;
+            display: grid;
+            
+            justify-content: center;
+        }
+        
+        @media screen and (max-width: 700px) {
+            div.center-everything {
+                max-width: 100%;
+                justify-content: left;
+                
+                margin: 5px;
+            }
+        }
+        
+        h1 {
+            font-size: 3em;
+        }
+        
+        body {
+            background-color: #2e1a29;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', 'Inter', 'Noto Color Emoji', sans-serif;
+            color: white;
+        }
+        
+        ul {
+            padding-left: 1.5ch;
+        }
+        
+        ul li:not(:first-child):has(a) {
+            margin-top: .3rem;
+        }
+        
+        .link.red {
+            padding-inline: 5px;
+            background-color: #d4fa16;
+            font-weight: 700;
+            color: black;
+        }
+        
+        .link.blue {
+            padding-inline: 5px;
+            background-color: #dcbff6;
+            font-weight: 700;
+            color: black;
+        }
+        
+        .link.green {
+            padding-inline: 5px;
+            background-color: #5938ff;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .link {
+            text-decoration: underline;
+            
+            width: fit-content;
+        }
+        
+        .link.accent {
+            color: #ee225f;
+            text-decoration-style: wavy;
+        }
+        
+        hr {
+            justify-self: left;
+            width: 100%;
+            
+            margin-top: 15px;
+            
+            height: 4px;
+            border: none;
+            border-bottom: 4px solid white;
+            
+            opacity: .1;
+        }
+    </style>
+</html>
