@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cell | Playground</title>
+    </head>
+    <body>
+        <h1>Cell</h1>
+        <canvas id="cell" width="500" height="500"></canvas>
+        <p>Generation <span id="gen">0</span> | Go back to <a href="./" class="link blue">the playground</a></p>
+    </body>
+    <script>
+    const canvas = document.getElementById("cell")
+    const context = canvas.getContext("2d")
+    const genText = document.getElementById("gen")
+    const randomColor = Math.floor(Math.random() * 256).toString(16) 
+    const MATRIX_SIZE = 25
+    const CELL_SIZE = canvas.width / MATRIX_SIZE // This will make cells fill the canvas evenly
+
+    let generation = 0
+    
+    function contstructMatrixWithSize(size) {
+      let res = []
+
+      for (let y = 0; y < size; y++) {
+        res.push([]);
+
+        for (let x = 0; x < size; x++) {
+          res[y].push(0)
+        }
+      }
+
+      return res
+    }
+
+    const state = contstructMatrixWithSize(MATRIX_SIZE)
+    
+    state[12][12] = 1
+    state[12][13] = 1
+    state[12][14] = 1
+    state[13][13] = 1
+
+    for (let y = 0; y < state.length; y++) {
+      for (let x = 0; x < state[y].length; x++) {
+        if (Math.random() < 0.2) {
+          state[y][x] = Math.floor(Math.random() * 4) + 1
+        }
+      }
+    }
+    
+    function checkNeighbours(x, y) {
+      const neighbors = []
+
+      for (let dy = -1; dy <= 1; dy++) {
+        for (let dx = -1; dx <= 1; dx++) {
+          if (dx === 0 && dy === 0) continue
+
+          const newX = x + dx
+          const newY = y + dy
+
+          if (newX >= 0 && newX < MATRIX_SIZE && newY >= 0 && newY < MATRIX_SIZE) {
+            if (state[newY][newX] > 0) {
+              neighbors.push(state[newY][newX])
+            }
+          }
+        }
+      }
+
+      const liveNeighbors = neighbors.length
+      const currentCell = state[y][x]
+
+      if (currentCell > 0) {
+        if (liveNeighbors < 2) return 0
+        if (liveNeighbors === 2 || liveNeighbors === 3) return currentCell
+        if (liveNeighbors > 3) return 0
+      } else {
+        if (liveNeighbors === 3) return 1
+      }
+
+      return currentCell
+    }
+    
+    function drawCell(x, y) {
+      switch(state[y][x]) {
+        case 0:
+          context.clearRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+          break;
+        case 1:
+          context.fillStyle = `#${randomColor}44`
+          context.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+          break;
+        case 2:
+          context.fillStyle = `#${randomColor}77`
+          context.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+          break;
+        case 3:
+          context.fillStyle = `#${randomColor}aa`
+          context.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+          break;
+        case 4:
+          context.fillStyle = `#${randomColor}ff`
+          context.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+          break;
+        default:
+          break;
+      }
+    }
+
+    function tick() {
+      for (let y = 0; y < state.length - 1; y++) {
+        for (let x = 0; x < state[y].length - 1; x++) {
+          drawCell(x, y)
+          state[y][x] = checkNeighbours(x, y)
+        }
+      }
+      
+      generation++
+    }
+    
+    function updateGenText() {
+      genText.innerText = generation
+    }
+    
+    setInterval(() => {
+      tick()
+      updateGenText()
+    }, 100)
+    
+    
+    </script>
+    <style> 
+        body {
+            background-color: #2e1a29;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', 'Inter', 'Noto Color Emoji', sans-serif;
+            color: white;
+        }
+        
+        .link.red {
+            background-color: #d4fa16;
+            color: black;
+        }
+        
+        .link.blue {
+            background-color: #dcbff6;
+            color: black;
+        }
+        
+        .link.green {
+            background-color: #5938ff;
+            color: white;
+        }
+        
+        .link {
+            padding-inline: 5px;
+            font-weight: 700;
+            text-decoration: underline;
+            
+            width: fit-content;
+        }
+        
+        #cell {
+          image-rendering: pixelated;
+        }
+    </style>
+</html>
