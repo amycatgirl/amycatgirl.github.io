@@ -418,7 +418,7 @@
             return processNode(ast);
           }
            
-          textarea.addEventListener('change', function() {
+          textarea.addEventListener('input', function() {
             const input = this.value; 
             const tokens = tokenize(input)
             const ast  = generateAST(input, tokens)
