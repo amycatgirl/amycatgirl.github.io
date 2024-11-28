@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Lang | Playground</title>
+    </head>
+    <body>
+        <div class="tk">
+            <textarea class="resize: none;" height="100%" width="100%"></textarea>
+            <div class="dbg">
+                <details>
+                    <summary>Lexer Output</summary>
+                    <pre id="lexeroutput"></pre>
+                </details>
+                <details>
+                    <summary>AST</summary>
+                    <pre id="astoutput"></pre>
+                </details>
+                <button id="copyto">Copy HTML</button>
+            </div>
+        </div>
+        <div id="result"></div>
+        <script>
+          const lexerOutput = document.getElementById('lexeroutput');
+          const astoutput = document.getElementById("astoutput");
+          const resultDiv = document.getElementById('result');
+          const textarea = document.querySelector('textarea');
+          
+          const copyButton = document.getElementById("copyto");
+          
+          let resultHTML = '';
+          
+          async function copyToClipboard(text) {
+            await navigator.clipboard.writeText(text)
+          }
+          
+          const RULES = [
+            {
+              type: "section",
+              regex: /^-{2}\s(.+)/g
+            },
+            {
+              type: "title", 
+              regex: /^={2}\s(.+)/g
+            },
+            {
+              type: "hr",
+              regex: /^-{3,}$/g
+            },
+            {
+              type: "italic",
+              regex: /_([^\s].+[^\s])_/g
+            },
+            {
+              type: "bold",
+              regex: /{([^\s].+[^\s])}/g
+            },
+            {
+              type: "strikethrough",
+              regex: /~([^\s][^\s~]*[^\s])~/g
+            },
+            {
+              type: "link",
+              regex: /<(http(s){0,1}:\/{2}[^\s]+\.[^\s]{1,63})>/g
+            },
+            {
+              type: "list",
+              regex: /^[\-\*]\s(.+)/g
+            }
+            // {
+            //   type: "inlinequote",
+            //   regex: "..."
+            // },
+            // {
+            //   type: "quote",
+            //   regex: "..."
+            // },
+            // {
+            //   type: "code",
+            //   regex: "..."
+            // },
+            // {
+            //   type: "codeblock",
+            //   regex: "..."
+            // }
+          ];
+          
+          function tokenize(input, tokens = []) {
+            let allMatches = [];
+            let lines = input.split('\n');
+            let runningIndex = 0;
+
+            for (let i = 0; i < lines.length; i++) {
+              const line = lines[i]; 
+
+              for (let rule of RULES) {
+                if (rule.type === 'section' || rule.type === 'title' || rule.type === "hr" || rule.type === "list") {
+                  // Process line-based tokens
+                  const regex = new RegExp(rule.regex.source);
+                  const match = line.match(regex);
+
+                  if (match) {
+                    allMatches.push({
+                      type: rule.type,
+                      content: match[1] || match[0], // Use capture group if exists, otherwise full match
+                      index: runningIndex,
+                      length: line.length
+                    });
+                  }
+                } else {
+                  // Process inline tokens
+                  const regex = new RegExp(rule.regex.source, 'g');
+                  let match;
+
+                  while ((match = regex.exec(line)) !== null) {
+                    allMatches.push({
+                      type: rule.type,
+                      content: match[1], // Use first capture group
+                      index: runningIndex + match.index,
+                      length: match[0].length
+                    });
+                  }
+                }
+              }
+
+              runningIndex += line.length + 1; // +1 for newline
+            }
+
+            // Sort matches by index
+            allMatches.sort((a, b) => a.index - b.index);
+
+            // Add all matches without filtering overlaps
+            for (let match of allMatches) {
+              tokens.push(match);
+            }
+
+            return tokens;
+          }
+          
+          function generateAST(input, tokens) {
+            const ast = { type: 'document', children: [] };
+            let currentParagraph = { type: 'paragraph', children: [] };
+            let currentList = null;
+            let currentIndex = 0;
+
+            // Split input into lines first
+            const lines = input.split('\n');
+            let lineStart = 0;
+            let emptyLineCount = 0;
+
+            for (let line of lines) {
+              const lineTokens = tokens.filter(t => 
+                t.index >= lineStart && t.index < lineStart + line.length
+              );
+
+              const isList = line.match(/^[\-\*]\s/);
+
+              if (isList) {
+                // If we're not already in a list
+                if (!currentList) {
+                  // Push any existing paragraph
+                  if (currentParagraph.children.length > 0) {
+                    ast.children.push(currentParagraph);
+                    currentParagraph = { type: 'paragraph', children: [] };
+                  }
+
+                  // Create new list
+                  currentList = {
+                    type: 'ul',
+                    children: []
+                  };
+                  ast.children.push(currentList);
+                }
+
+                const listTokens = tokens.filter(t => 
+                  t.index >= lineStart + 2 && // Skip the list marker
+                  t.index < lineStart + line.length &&
+                  t.type !== 'list' // Exclude the list token itself
+                );
+
+                const listItem = {
+                  type: 'li',
+                  children: []
+                };
+
+                let listContentIndex = lineStart + 2; // Skip the list marker
+
+                for (const token of listTokens) {
+                  // Add text before token if needed
+                  if (token.index > listContentIndex) {
+                    const text = line.slice(listContentIndex - lineStart, token.index - lineStart);
+                    if (text) {
+                      listItem.children.push({
+                        type: 'text',
+                        content: text
+                      });
+                    }
+                  }
+
+                  // Add formatted node
+                  listItem.children.push({
+                    type: token.type,
+                    content: token.content
+                  });
+
+                  listContentIndex = token.index + token.length;
+                }
+
+                // Add remaining text
+                const remainingText = line.slice(listContentIndex - lineStart);
+                if (remainingText) {
+                  listItem.children.push({
+                    type: 'text',
+                    content: remainingText
+                  });
+                }
+
+                currentList.children.push(listItem);
+
+              } else {
+                // Not a list item
+                currentList = null;
+
+                if (line.trim() === '') {
+                  emptyLineCount++;
+                  // Double newline - push current paragraph if it has content
+                  if (emptyLineCount >= 1 && currentParagraph.children.length > 0) {
+                    ast.children.push(currentParagraph);
+                    currentParagraph = { type: 'paragraph', children: [] };
+                    emptyLineCount = 0;
+                  }
+                } else {
+                  emptyLineCount = 0;
+                  // Single newline - add break if needed
+                  if (currentParagraph.children.length > 0) {
+                    currentParagraph.children.push({
+                      type: 'br'
+                    });
+                  }
+
+                  // Regular line - process tokens
+                  const lineEnd = lineStart + line.length;
+                  const paragraphTokens = lineTokens.filter(t => t.type !== 'list');
+
+                  for (let i = 0; i < paragraphTokens.length; i++) {
+                    const token = paragraphTokens[i];
+
+                    // Add text before the token if needed 
+                    if (token.index > currentIndex) {
+                      const text = input.slice(currentIndex, token.index);
+                      if (text) {
+                        currentParagraph.children.push({
+                          type: 'text',
+                          content: text
+                        });
+                      }
+                    }
+
+                    if (token.type === 'section' || token.type === 'title' || token.type === 'hr') {
+                      ast.children.push({
+                        type: token.type,
+                        content: token.content
+                      });
+                    } else {
+                      // Create formatted node
+                      const formattedNode = {
+                        type: token.type,
+                        content: token.content
+                      };
+
+                      // Check for nested tokens
+                      const childTokens = paragraphTokens.filter(t =>
+                        t.index > token.index &&
+                        t.index + t.length <= token.index + token.length
+                      );
+
+                      if (childTokens.length) {
+                        formattedNode.children = [];
+                        let nestedIndex = token.index + (token.type === 'bold' ? 1 : 0);
+                        if (token.type === 'italic') nestedIndex++;
+                        if (token.type === 'strikethrough') nestedIndex++;
+
+                        for (let j = 0; j < childTokens.length; j++) {
+                          const childToken = childTokens[j];
+
+                          if (childToken.index > nestedIndex) {
+                            const text = input.slice(nestedIndex, childToken.index);
+                            if (text) {
+                              formattedNode.children.push({
+                                type: 'text',
+                                content: text
+                              });
+                            }
+                          }
+
+                          formattedNode.children.push({
+                            type: childToken.type,
+                            content: childToken.content
+                          });
+
+                          nestedIndex = childToken.index + childToken.length;
+                          i++;
+                        }
+
+                        const remainingText = input.slice(nestedIndex, token.index + token.length - 1);
+                        if (remainingText) {
+                          formattedNode.children.push({
+                            type: 'text',
+                            content: remainingText
+                          });
+                        }
+                      }
+
+                      currentParagraph.children.push(formattedNode);
+                    }
+
+                    currentIndex = token.index + token.length;
+                  }
+
+                  if (currentIndex < lineEnd) {
+                    const text = input.slice(currentIndex, lineEnd);
+                    if (text) {
+                      currentParagraph.children.push({
+                        type: 'text',
+                        content: text
+                      });
+                    }
+                  }
+                }
+              }
+
+              lineStart += line.length + 1;
+              currentIndex = lineStart;
+            }
+
+            // Push final paragraph if it has content
+            if (currentParagraph.children.length > 0) {
+              ast.children.push(currentParagraph);
+            }
+
+            return ast;
+          }
+
+          function toHTML(ast) {
+            let html = '';
+
+            function processNode(node, isNested = false) {
+              switch(node.type) {
+                case 'document':
+                  return node.children.map(child => processNode(child)).join('\n');
+
+                case 'paragraph':
+                  return `<p>${node.children.map(child => processNode(child, true)).join('')}</p>`;
+
+                case 'text':
+                  let content = node.content;
+                  // Remove standalone underscores
+                  content = content.replace(/_/g, '');
+                  return content;
+
+                case 'section':
+                  return `<h2>${node.content}</h2>`;
+
+                case 'title':
+                  return `<h1>${node.content}</h1>`;
+
+                case 'hr':
+                  return `<hr>`;
+
+                case 'br':
+                  return '<br>';
+
+                case 'italic': {
+                  let content;
+                  if (node.children) {
+                    content = node.children.map(child => processNode(child, true)).join('');
+                  } else {
+                    content = node.content;
+                  }
+                  return `<em>${content}</em>`;
+                }
+
+                case 'bold': {
+                  let content;
+                  if (node.children) {
+                    content = node.children.map(child => processNode(child, true)).join('');
+                  } else {
+                    content = node.content;
+                  }
+                  return `<strong>${content}</strong>`;
+                }
+
+                case 'strikethrough': {
+                  let content;
+                  if (node.children) {
+                    content = node.children.map(child => processNode(child, true)).join('');
+                  } else {
+                    content = node.content;
+                  }
+                  return `<del>${content}</del>`;
+                }
+
+                case 'link':
+                  return `<a href="${node.content}">${node.content}</a>`;
+
+                case 'ul':
+                  return `<ul>${node.children.map(child => processNode(child)).join('\n')}</ul>`;
+
+                case 'li':
+                  return `<li>${node.children.map(child => processNode(child)).join('')}</li>`;
+
+                default:
+                  return node.content || '';
+              }
+            }
+
+            return processNode(ast);
+          }
+           
+          textarea.addEventListener('change', function() {
+            const input = this.value; 
+            const tokens = tokenize(input)
+            const ast  = generateAST(input, tokens)
+            const result = toHTML(ast)
+            
+            lexerOutput.innerText = JSON.stringify(tokens, null, 2);            
+            astoutput.innerText = JSON.stringify(ast, null, 2)
+            
+            resultHTML = result
+            resultDiv.innerHTML = result;
+          });
+          
+          copyButton.addEventListener('click', () => {
+            if (resultHTML === '') return
+            
+            copyToClipboard(resultHTML).then(() => {
+              alert("Resulting HTML copied to clipboard!")
+            }).catch(console.error)
+          })
+          
+          textarea.value = `== start by writting something\n\nlet your thoughts flow...\n\n{you have bold text} and _italic text_\nas well as\n\n- lists\n- with\n- multiple items\n\n-- oh and sections\n\nneed more? use html instead, we don't sanitize anything here :p\n\nhappy writting!\n\n---\n\nprobably more sooner or later, who knows`
+          
+          const tokens = tokenize(textarea.value)
+          const ast  = generateAST(textarea.value, tokens)
+          const result = toHTML(ast)
+          
+          lexerOutput.innerText = JSON.stringify(tokens, null, 2);            
+          astoutput.innerText = JSON.stringify(ast, null, 2)
+          
+          resultHTML = result
+          resultDiv.innerHTML = result;
+        </script> 
+        
+        <style>
+            body {
+                display: flex;
+                width: 100%;
+                height: 100vh;
+                
+                margin: 0 0;
+                padding: 0 0;
+                gap: .5em;
+                
+                
+                font-family: "Inter", sans-serif;
+            }
+            
+            .tk {
+                display: flex;
+                width: 100%;
+                height: 100%;
+                
+                margin: 0 0;
+                padding: 0 0;
+                
+                flex-direction: column;
+                
+                border-right: 2px solid black;
+            }
+            
+            textarea {
+                height: 100%;
+                
+                resize: none;
+                
+                font-family: monospace;
+                font-size: 1.5em;
+                
+                border: none;
+            }
+            
+            #result {
+                width: 100%;
+                height: 100%;
+                
+                overflow: auto;
+            }
+            
+            .dbg {
+                background-color: #160116;
+                color: white;
+                display: flex;
+                
+                flex-direction: column;
+                max-height: 50%;
+            }
+            
+            details {
+                display: flex;
+                overflow-y: auto;
+                min-height: 0px;
+            }
+            
+            details pre {
+                text-wrap: stable;
+            }
+            
+            details summary {
+                flex-shrink: 0;
+            }
+        </style>
+    </body>
+</html>

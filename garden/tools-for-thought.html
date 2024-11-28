@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preload" type="text/css" as="style" href="/assets/noto.css">
+        <link rel="preload" type="font/ttf" as="font" href="/assets/NotoEmoji-Light.ttf">
+        <link rel="preload" type="font/ttf" as="font" href="/assets/NotoColorEmoji-Regular.ttf">
+        <title>Tools for thought | Garden</title>
+    </head>
+    <body>
+        <div class="center-everything">
+            <h1>Tools for thought</h1>
+            <p>Do i learn how to make my own markup language</p>
+            <p>I've always had a desire to make something like markdown<br>or bbtext<br>or html<br>or text</p>
+            <p>but i always got stuck<br>yes stuck<br>that state of not knowing what to do<br>where to go</p>
+            <p>but this time i got a plan<br>i know what i want<br>what to do<br>the path i need to take</p>
+            <h2>language</h2>
+            <p>language is how we interact with each other</p>
+            <p>language can be multiple things</p>
+            <p>example: this, is language</p>
+            <p>but this is—</p>
+            <h2>nyarkup</h2>
+            <p>it's a markup language<br>it allows you to express yourself using text</p>
+            <p>very new concept, i know</p>
+            <h2>why</h2>
+            <p>why not? it's fun! here is why i made a—</p>
+            <h2>language</h2>
+            <p>there is textual languages, verbal languages, sign languages</p>
+            <p>programming languages, and <em>markup</em> languages</p>
+            <p>if you can express your ideas, and other people can understand them, then it's a language</p>
+            <p>but this, is—</p>
+            <h2>nyarkup</h2>
+            <p>it's another markup language, it takes ideas from markdown</p>
+            <p>it's meant to be similar to markdown</p>
+            <p>it has the bare minimum needed for these blogposts</p>
+            <p>lets go back to—</p>
+            <p>no lets explain—</p>
+            <h2>why</h2>
+            <p>i was bored<br>i had nothing to do<br>i didnt feel stuck<br>i went with the flow<br>and the flow<br>the flow went back to—</p>
+            <h2>language</h2>
+            <p>we need language</p>
+            <p>we have to express ourselves</p>
+            <p>we have to let others express themselves</p>
+            <p>we have to respect their opinions</p>
+            <p>but what if—</p>
+            <p>do we really need to—</p>
+            <p>what is—</p>
+            <h2>nyarkup</h2>
+            <p>is my second project<br>it's my first language<br>it's my only language</p>
+            <p>does it make any sense?<br>was it worth making?<br>did i waste my time?</p>
+            <h2>why</h2>
+            <p>am i thinking too hard?<br>it's just a tool</p>
+            <p>it's just a tool<br>a tool... for thought</p>
+            <p>but what if<br>what if it wasn't</p>
+            <h2>reflexion</h2>
+            <p>i think we have to stop and think<br>does this really matter?</p>
+            <p>i mean, making tools that are similar to others</p>
+            <p>because clearly i could've gone with markdown<br>or with raw html if i was feeling <em>fancy</em></p>
+            <p>but no, i can do better<br>i decided to get out of my comfort zone<br>and make my own tool, my own language</p>
+            <p>something to express myself<br>something to let my thoughts flow<br>something to... feel free</p>
+            <p>it's not just a tool for thought, it's something else</p>
+            <p>go back to <a href="/garden" class="link green">the garden</a></p>
+        </div>
+    </body>
+    <style>
+        .smaller {
+            font-size: .5em;
+            opacity: 75%;
+        }
+        
+        div.center-everything {
+            max-width: 50%;
+            display: grid;
+            
+            justify-content: center;
+        }
+        
+        @media screen and (max-width: 700px) {
+            div.center-everything {
+                max-width: 100%;
+                justify-content: left;
+                
+                margin: 5px;
+            }
+        }
+        
+        h1 {
+            font-size: 3em;
+        }
+        
+        body {
+            background-color: #2e1a29;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', 'Inter', 'Noto Color Emoji', sans-serif;
+            color: white;
+        }
+        
+        ul {
+            padding-left: 1.5ch;
+        }
+        
+        ul li:not(:first-child):has(a) {
+            margin-top: .3rem;
+        }
+        
+        .link.red {
+            padding-inline: 5px;
+            background-color: #d4fa16;
+            font-weight: 700;
+            color: black;
+        }
+        
+        .link.blue {
+            padding-inline: 5px;
+            background-color: #dcbff6;
+            font-weight: 700;
+            color: black;
+        }
+        
+        .link.green {
+            padding-inline: 5px;
+            background-color: #5938ff;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .link {
+            text-decoration: underline;
+            
+            width: fit-content;
+        }
+        
+        .link.accent {
+            color: #ee225f;
+            text-decoration-style: wavy;
+        }
+        
+        hr {
+            justify-self: left;
+            width: 100%;
+            
+            margin-top: 15px;
+            
+            height: 4px;
+            border: none;
+            border-bottom: 4px solid white;
+            
+            opacity: .1;
+        }
+        
+        h2::after {
+            content: "";
+            
+            display: block;
+            width: 100%;
+            height: 2px;
+            
+            margin-top: 5px;
+            
+            background-color: #fff;
+            opacity: .2;
+        }
+        
+        blockquote {
+            border-left: 2px solid #ffc9ec;
+            margin-left: 0;
+            padding-left: 2rem;
+            color: #ffc9ec;
+        }
+    </style>
+</html>
