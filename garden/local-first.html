@@ -6,23 +6,19 @@
         <link rel="preload" type="text/css" as="style" href="/assets/noto.css">
         <link rel="preload" type="font/ttf" as="font" href="/assets/NotoEmoji-Light.ttf">
         <link rel="preload" type="font/ttf" as="font" href="/assets/NotoColorEmoji-Regular.ttf">
-        <title>Garden</title>
+        <title>The wonders of local-first | Garden</title>
     </head>
     <body>
         <div class="center-everything">
-            <h1>Garden</h1>
-            <p>This is where i grow my plants, the goal is to have a new post every day.</p>
-            <p>Not sure if i am going to ever meet that goal, but it is a goal for sure</p>
-            <ul>
-                <li><a class="link accent" href="./local-first.html">The wonders of local-first</a></li>
-                <li><a class="link accent" href="./thanks.html">Thanks</a></li>
-                <li><a class="link accent" href="./tools-for-thought.html">Tools for Thought</a></li>
-                <li><a class="link accent" href="./coffee.html">Coffee</a></li>
-                <li><a class="link accent" href="./slippy.html">Getting used to a slippy mindset</a></li>
-                <li><a class="link accent" href="./starting-out.html">Starting Out</a></li>
-            </ul>
-            
-            <span>Go back to <a class="link accent" href="/">amycatgirl.github.io</a></span>
+            <h1>the wonders of local-first</h1>
+            <p>i was writing my post<br>without a good wifi connection</p>
+            <p>i am at my grandma's house</p>
+            <p>and then, the wifi went out</p>
+            <p>well, not <em>wifi</em> per-se<br>just mobile data<br>i don't have good reception</p>
+            <p>but my playground worked</p>
+            <p>and that's when i realised</p>
+            <p>the wonders of<br>local-first<br>development</p>
+            <p>Go back to <a class="link green" href="/garden">the garden</a></p>
         </div>
     </body>
     <style>
@@ -93,7 +89,7 @@
         }
         
         .link.accent {
-            color: #ffc9ec;
+            color: #ee225f;
             text-decoration-style: wavy;
         }
         
@@ -108,6 +104,26 @@
             border-bottom: 4px solid white;
             
             opacity: .1;
+        }
+        
+        h2::after {
+            content: "";
+            
+            display: block;
+            width: 100%;
+            height: 2px;
+            
+            margin-top: 5px;
+            
+            background-color: #fff;
+            opacity: .2;
+        }
+        
+        blockquote {
+            border-left: 2px solid #ffc9ec;
+            margin-left: 0;
+            padding-left: 2rem;
+            color: #ffc9ec;
         }
     </style>
 </html>
