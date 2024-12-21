@@ -1,120 +1,112 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Feeder | Playground</title>
-    </head>
-    <body>
-        <div class="center-everything">
-            <h1>Feedgen</h1>
-            <div id="composer">
-                <label for="title">Title</label>
-                <input
-                    id="title"
-                    type="text"
-                    maxlength="30"
-                    minlength="1"
-                    placeholder="Chompers"
-                />
-                <label for="description">Description</label>
-                <textarea
-                    id="description"
-                    minlength="1"
-                    maxlength="2000"
-                    placeholder="Chompers chompers chompers chompers"
-                ></textarea>
-                <label for="link">Link</label>
-                <input
-                    id="link"
-                    type="url"
-                    minlength="1"
-                    placeholder="https://amycatgirl.github.io/garden/tools-for-thought.html"
-                />
-                <label for="pubdate">Publish Date</label>
-                <input id="pubDate" type="datetime-local" />
-                <button id="add">Add to feed</button>
-                <button id="generate">Publish!</button>
-            </div>
-            <div id="items" role="feed"></div>
-        </div>
-    </body>
-    <script>
-        // Props to whitep4nth3r for this awesome rfc822 date builder function!
-        // Link: https://whitep4nth3r.com/blog/how-to-format-dates-for-rss-feeds-rfc-822/
-        function addLeadingZero(num) {
-            num = num.toString();
-            while (num.length < 2) num = "0" + num;
-            return num;
-        }
-        // From StackOverflow: https://stackoverflow.com/a/74683660
-        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        const getOffset = (tz) =>
-            Intl.DateTimeFormat("ia", {
-                timeZoneName: "shortOffset",
-                timeZone: tz,
-            })
-                .formatToParts()
-                .find((i) => i.type === "timeZoneName")
-                .value // => "GMT+/-hh:mm"
-                .slice(3); //=> +/-hh:mm
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feeder | Playground</title>
+  </head>
+  <body>
+    <div class="center-everything">
+      <h1>Feedgen</h1>
+      <div id="composer">
+        <label for="title">Title</label>
+        <input
+          id="title"
+          type="text"
+          maxlength="30"
+          minlength="1"
+          placeholder="Chompers"
+        />
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          minlength="1"
+          maxlength="2000"
+          placeholder="Chompers chompers chompers chompers"
+        ></textarea>
+        <label for="link">Link</label>
+        <input
+          id="link"
+          type="url"
+          minlength="1"
+          placeholder="https://amycatgirl.github.io/garden/tools-for-thought.html"
+        />
+        <label for="pubdate">Publish Date</label>
+        <input id="pubDate" type="datetime-local" />
+        <button id="add">Add to feed</button>
+        <button id="generate">Publish!</button>
+      </div>
+      <div id="items" role="feed"></div>
+    </div>
+  </body>
+  <script>
+    // Props to whitep4nth3r for this awesome rfc822 date builder function!
+    // Link: https://whitep4nth3r.com/blog/how-to-format-dates-for-rss-feeds-rfc-822/
+    function addLeadingZero(num) {
+      num = num.toString();
+      while (num.length < 2) num = "0" + num;
+      return num;
+    }
+    // From StackOverflow: https://stackoverflow.com/a/74683660
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const getOffset = (tz) =>
+      Intl.DateTimeFormat("ia", {
+        timeZoneName: "shortOffset",
+        timeZone: tz,
+      })
+        .formatToParts()
+        .find((i) => i.type === "timeZoneName")
+        .value // => "GMT+/-hh:mm"
+        .slice(3); //=> +/-hh:mm
 
-        function buildRFC822Date(dateString) {
-            const dayStrings = [
-                "Sun",
-                "Mon",
-                "Tue",
-                "Wed",
-                "Thu",
-                "Fri",
-                "Sat",
-            ];
-            const monthStrings = [
-                "Jan",
-                "Feb",
-                "Mar",
-                "Apr",
-                "May",
-                "Jun",
-                "Jul",
-                "Aug",
-                "Sep",
-                "Oct",
-                "Nov",
-                "Dec",
-            ];
+    function buildRFC822Date(dateString) {
+      const dayStrings = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      const monthStrings = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
 
-            const timeStamp = Date.parse(dateString);
-            const date = new Date(timeStamp);
+      const timeStamp = Date.parse(dateString);
+      const date = new Date(timeStamp);
 
-            const day = dayStrings[date.getDay()];
-            const dayNumber = addLeadingZero(date.getDate());
-            const month = monthStrings[date.getMonth()];
-            const year = date.getFullYear();
-            const time = `${addLeadingZero(date.getHours())}:${addLeadingZero(date.getMinutes())}:00`;
-            const timezone = `GMT${getOffset(tz)}`;
+      const day = dayStrings[date.getDay()];
+      const dayNumber = addLeadingZero(date.getDate());
+      const month = monthStrings[date.getMonth()];
+      const year = date.getFullYear();
+      const time = `${addLeadingZero(date.getHours())}:${addLeadingZero(date.getMinutes())}:00`;
+      const timezone = `GMT${getOffset(tz)}`;
 
-            //Wed, 02 Oct 2002 13:00:00 GMT
-            return `${day}, ${dayNumber} ${month} ${year} ${time} ${timezone}`;
-        }
-    </script>
-    <script defer type="module">
-        const $ = (id) => document.getElementById(id);
-        // Feel free to change these as you like
-        // These options will dictate how your feed will display as in a RSS reader
-        const CHANNEL_TITLE = "Amelia's Digital Garden";
-        const CHANNEL_WEBSITE = "https://amycatgirl.github.io";
-        const CHANNEL_DESCRIPTION =
-            "Notes, thoughts and random things from Amelia.";
-        const CHANNEL_LANGUAGE = "en-gb";
-        const CHANNEL_GENERATOR = "amycatgirl's feedgen";
+      //Wed, 02 Oct 2002 13:00:00 GMT
+      return `${day}, ${dayNumber} ${month} ${year} ${time} ${timezone}`;
+    }
+  </script>
+  <script defer type="module">
+    const $ = (id) => document.getElementById(id);
+    // Feel free to change these as you like
+    // These options will dictate how your feed will display as in a RSS reader
+    const CHANNEL_TITLE = "Amelia's Digital Garden";
+    const CHANNEL_WEBSITE = "https://amycatgirl.github.io";
+    const CHANNEL_DESCRIPTION =
+      "Notes, thoughts and random things from Amelia.";
+    const CHANNEL_LANGUAGE = "en-gb";
+    const CHANNEL_GENERATOR = "amycatgirl's feedgen";
 
-        // Edit this if you want to point it to your repo
-        const FEED_LINK =
-            "https://github.com/amycatgirl/amycatgirl.github.io/edit/main/garden/feed.xml";
+    // Edit this if you want to point it to your repo
+    const FEED_LINK =
+      "https://github.com/amycatgirl/amycatgirl.github.io/edit/main/garden/feed.xml";
 
-        const RSS_TEMPLATE = (items) =>
-            `
+    const RSS_TEMPLATE = (items) =>
+      `
           <rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
           <channel>
           <title>
@@ -132,285 +124,283 @@
           </channel>
           </rss>
           `
-                .trim()
-                .split("\n")
-                .map((line) => line.trim())
-                .join("");
+        .trim()
+        .split("\n")
+        .map((line) => line.trim())
+        .join("");
 
-        window.genTemplate = RSS_TEMPLATE;
+    window.genTemplate = RSS_TEMPLATE;
 
-        // Generator code starts here
-        const feedContents = await fetch("/garden/feed.xml");
-        let feed;
+    // Generator code starts here
+    const feedContents = await fetch("/garden/feed.xml");
+    let feed;
 
-        if (!feedContents.ok) {
-            console.warn("No feed contents were fetched!");
-        } else {
-            const text = await feedContents.text();
-            const parser = new DOMParser();
-            feed = parser.parseFromString(text, "text/xml");
+    if (!feedContents.ok) {
+      console.warn("No feed contents were fetched!");
+    } else {
+      const text = await feedContents.text();
+      const parser = new DOMParser();
+      feed = parser.parseFromString(text, "text/xml");
 
-            displayFeedItems();
-        }
+      displayFeedItems();
+    }
 
-        function buildRSSItem(metadata) {
-            const item = feed.createElement("item");
-            item.innerHTML = `<title><![CDATA[${metadata.title}]]></title><description><![CDATA[${metadata.description}]]></description><link>${metadata.link}</link><guid isPermaLink="true">${metadata.link}</guid><pubDate>${buildRFC822Date(metadata.pubDate)}</pubDate>`;
+    function buildRSSItem(metadata) {
+      const item = feed.createElement("item");
+      item.innerHTML = `<title><![CDATA[${metadata.title}]]></title><description><![CDATA[${metadata.description}]]></description><link>${metadata.link}</link><guid isPermaLink="true">${metadata.link}</guid><pubDate>${buildRFC822Date(metadata.pubDate)}</pubDate>`;
 
-            return item;
-        }
+      return item;
+    }
 
-        function buildComponent(metadata) {
-            const { title, description, link } = metadata;
-            console.log(title, description, link);
-            const itemComponent = document.createElement("a");
-            itemComponent.classList.add("item");
+    function buildComponent(metadata) {
+      const { title, description, link } = metadata;
+      console.log(title, description, link);
+      const itemComponent = document.createElement("a");
+      itemComponent.classList.add("item");
 
-            itemComponent.id = title.toLowerCase().trim().split(" ").join("-");
-            itemComponent.href = link;
-            itemComponent.innerHTML = `
+      itemComponent.id = title.toLowerCase().trim().split(" ").join("-");
+      itemComponent.href = link;
+      itemComponent.innerHTML = `
         <span role="heading">${title.trim()}</span>
         <p>
           ${description.trim().split("\n").join("<br />\n")}
         </p>
       `.trim();
 
-            return itemComponent;
-        }
+      return itemComponent;
+    }
 
-        function generateItem(item) {
-            const itemChildren = Array.from(item.children);
+    function generateItem(item) {
+      const itemChildren = Array.from(item.children);
 
-            const title = itemChildren.find(
-                (node) => node.localName === "title",
-            ).textContent;
+      const title = itemChildren.find(
+        (node) => node.localName === "title",
+      ).textContent;
 
-            const description = itemChildren.find(
-                (node) => node.localName === "description",
-            ).textContent;
+      const description = itemChildren.find(
+        (node) => node.localName === "description",
+      ).textContent;
 
-            const link = itemChildren.find(
-                (node) => node.localName === "link",
-            ).textContent;
+      const link = itemChildren.find(
+        (node) => node.localName === "link",
+      ).textContent;
 
-            const component = buildComponent({ title, description, link });
+      const component = buildComponent({ title, description, link });
 
-            return component;
-        }
+      return component;
+    }
 
-        function displayFeedItems() {
-            const itemList = document.getElementById("items");
+    function displayFeedItems() {
+      const itemList = document.getElementById("items");
 
-            // clear list!
-            itemList.innerHTML = "";
-            const itemsInFeed = feed.getElementsByTagName("item");
+      // clear list!
+      itemList.innerHTML = "";
+      const itemsInFeed = feed.getElementsByTagName("item");
 
-            for (const item of itemsInFeed) {
-                const component = generateItem(item);
-                itemList.prepend(component);
-            }
-        }
+      for (const item of itemsInFeed) {
+        const component = generateItem(item);
+        itemList.prepend(component);
+      }
+    }
 
-        function appendToFeed(newItem) {
-            feed.children.item("channel").append(buildRSSItem(newItem));
+    function appendToFeed(newItem) {
+      feed.children.item("channel").append(buildRSSItem(newItem));
 
-            displayFeedItems();
-        }
+      displayFeedItems();
+    }
 
-        document.getElementById("add").addEventListener("click", (ev) => {
-            ev.preventDefault(); // We don't want any weird behaviour with buttons so we prevent their default action
+    document.getElementById("add").addEventListener("click", (ev) => {
+      ev.preventDefault(); // We don't want any weird behaviour with buttons so we prevent their default action
 
-            const newItem = {
-                title: $("title").value,
-                description: $("description").value,
-                link: $("link").value,
-                pubDate: $("pubDate").value,
-            };
+      const newItem = {
+        title: $("title").value,
+        description: $("description").value,
+        link: $("link").value,
+        pubDate: $("pubDate").value,
+      };
 
-            // do stuff i guess
-            appendToFeed(newItem);
-        });
+      // do stuff i guess
+      appendToFeed(newItem);
+    });
 
-        function getFeedItems() {
-            const items = Array.from(feed.getElementsByTagName("item")).map(
-                (item) => item.outerHTML,
-            );
-            return items;
-        }
+    function getFeedItems() {
+      const items = Array.from(feed.getElementsByTagName("item")).map(
+        (item) => item.outerHTML,
+      );
+      return items;
+    }
 
-        async function copyToClipboard(text) {
-            await navigator.clipboard.writeText(text);
-        }
+    async function copyToClipboard(text) {
+      await navigator.clipboard.writeText(text);
+    }
 
-        $("generate").addEventListener("click", async (ev) => {
-            ev.preventDefault();
+    $("generate").addEventListener("click", async (ev) => {
+      ev.preventDefault();
 
-            copyToClipboard(RSS_TEMPLATE(getFeedItems())).then(() =>
-                window.open(FEED_LINK, "_blank").focus(),
-            );
-        });
-    </script>
+      copyToClipboard(RSS_TEMPLATE(getFeedItems())).then(() =>
+        window.open(FEED_LINK, "_blank").focus(),
+      );
+    });
+  </script>
 
-    <style>
-        *,
-        *:is(::before, ::after) {
-            box-sizing: border-box;
-        }
-        .smaller {
-            font-size: 0.5em;
-            opacity: 75%;
-        }
+  <style>
+    *,
+    *:is(::before, ::after) {
+      box-sizing: border-box;
+    }
+    .smaller {
+      font-size: 0.5em;
+      opacity: 75%;
+    }
 
-        div#composer {
-            flex-direction: column;
-            gap: 5px;
-            display: flex;
-            border-radius: 5px;
-        }
+    div#composer {
+      flex-direction: column;
+      gap: 5px;
+      display: flex;
+      border-radius: 5px;
+    }
 
-        button {
-            margin-top: 0.6rem;
-            padding: 7px;
-            background: transparent;
+    button {
+      margin-top: 0.6rem;
+      padding: 7px;
+      background: transparent;
 
-            color: white;
-            font-size: 1.1em;
-            font-weight: 700;
+      color: white;
+      font-size: 1.1em;
+      font-weight: 700;
 
-            width: fit-content;
+      width: fit-content;
 
-            border: 3px solid #8ffdab;
-        }
+      border: 3px solid #8ffdab;
+    }
 
-        :is(input, textarea) {
-            transition: box-shadow 250ms;
-            padding: 7px 10px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 5px;
-            color: white;
-            background: transparent;
-            outline: none;
-            box-shadow: none;
-        }
+    :is(input, textarea) {
+      transition: box-shadow 250ms;
+      padding: 7px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 5px;
+      color: white;
+      background: transparent;
+      outline: none;
+      box-shadow: none;
+    }
 
-        div#composer > input:focus,
-        textarea:focus {
-            /* Please change the accent color */
-            box-shadow: 0 0 0 2px blue;
-        }
+    div#composer > input:focus,
+    textarea:focus {
+      /* Please change the accent color */
+      box-shadow: 0 0 0 2px blue;
+    }
 
-        div#items {
-            margin-top: 1rem;
+    div#items {
+      margin-top: 1rem;
 
-            display: flex;
-            flex-direction: column;
+      display: flex;
+      flex-direction: column;
 
-            gap: 1rem;
-            max-width: 100%;
-        }
+      gap: 1rem;
+      max-width: 100%;
+    }
 
-        div#items .item {
-            display: block;
-            padding: 10px;
-            & span[role="heading"] {
-                font-size: 1.7em;
-                font-weight: bold;
-            }
+    div#items .item {
+      display: block;
+      padding: 10px;
+      & span[role="heading"] {
+        font-size: 1.7em;
+        font-weight: bold;
+      }
 
-            border: 2px solid white;
-            border-radius: 5px;
-            color: white;
-            text-decoration: none;
-        }
+      border: 2px solid white;
+      border-radius: 5px;
+      color: white;
+      text-decoration: none;
+    }
 
-        div.center-everything {
-            max-width: 50%;
-            display: grid;
-            justify-content: center;
-        }
-        @media screen and (max-width: 700px) {
-            div.center-everything {
-                max-width: 100%;
-                justify-content: left;
-                margin: 5px;
-            }
-        }
-        h1 {
-            font-size: 3em;
-        }
-        body {
-            background-color: #2e1a29;
-            font-family:
-                system-ui,
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                Roboto,
-                Oxygen,
-                Ubuntu,
-                Cantarell,
-                "Open Sans",
-                "Helvetica Neue",
-                "Inter",
-                "Noto Color Emoji",
-                sans-serif;
-            color: white;
-        }
-        ul {
-            padding-left: 1.5ch;
-        }
-        ul li:not(:first-child):has(a) {
-            margin-top: 0.3rem;
-        }
-        .link.red {
-            padding-inline: 5px;
-            background-color: #d4fa16;
-            font-weight: 700;
-            color: black;
-        }
-        .link.blue {
-            padding-inline: 5px;
-            background-color: #dcbff6;
-            font-weight: 700;
-            color: black;
-        }
-        .link.green {
-            padding-inline: 5px;
-            background-color: #5938ff;
-            font-weight: 700;
-            color: white;
-        }
-        .link {
-            text-decoration: underline;
-            width: fit-content;
-        }
-        .link.accent {
-            color: #ee225f;
-            text-decoration-style: wavy;
-        }
-        hr {
-            justify-self: left;
-            width: 100%;
-            margin-top: 15px;
-            height: 4px;
-            border: none;
-            border-bottom: 4px solid white;
-            opacity: 0.1;
-        }
-        h2::after {
-            content: "";
-            display: block;
-            width: 100%;
-            height: 2px;
-            margin-top: 5px;
-            background-color: #fff;
-            opacity: 0.2;
-        }
-        blockquote {
-            border-left: 2px solid #ffc9ec;
-            margin-left: 0;
-            padding-left: 2rem;
-            color: #ffc9ec;
-        }
-    </style>
+    div.center-everything {
+      max-width: 50%;
+    }
+    @media screen and (max-width: 700px) {
+      div.center-everything {
+        max-width: 100%;
+        justify-content: left;
+        margin: 5px;
+      }
+    }
+    h1 {
+      font-size: 3em;
+    }
+    body {
+      background-color: #2e1a29;
+      font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Oxygen,
+        Ubuntu,
+        Cantarell,
+        "Open Sans",
+        "Helvetica Neue",
+        "Inter",
+        "Noto Color Emoji",
+        sans-serif;
+      color: white;
+    }
+    ul {
+      padding-left: 1.5ch;
+    }
+    ul li:not(:first-child):has(a) {
+      margin-top: 0.3rem;
+    }
+    .link.red {
+      padding-inline: 5px;
+      background-color: #d4fa16;
+      font-weight: 700;
+      color: black;
+    }
+    .link.blue {
+      padding-inline: 5px;
+      background-color: #dcbff6;
+      font-weight: 700;
+      color: black;
+    }
+    .link.green {
+      padding-inline: 5px;
+      background-color: #5938ff;
+      font-weight: 700;
+      color: white;
+    }
+    .link {
+      text-decoration: underline;
+      width: fit-content;
+    }
+    .link.accent {
+      color: #ee225f;
+      text-decoration-style: wavy;
+    }
+    hr {
+      justify-self: left;
+      width: 100%;
+      margin-top: 15px;
+      height: 4px;
+      border: none;
+      border-bottom: 4px solid white;
+      opacity: 0.1;
+    }
+    h2::after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 2px;
+      margin-top: 5px;
+      background-color: #fff;
+      opacity: 0.2;
+    }
+    blockquote {
+      border-left: 2px solid #ffc9ec;
+      margin-left: 0;
+      padding-left: 2rem;
+      color: #ffc9ec;
+    }
+  </style>
 </html>
