@@ -20,7 +20,7 @@
 
     let generation = 0
     
-    function contstructMatrixWithSize(size) {
+    function construct_matrix(size) {
       let res = []
 
       for (let y = 0; y < size; y++) {
@@ -34,12 +34,7 @@
       return res
     }
 
-    const state = contstructMatrixWithSize(MATRIX_SIZE)
-    
-    state[12][12] = 1
-    state[12][13] = 1
-    state[12][14] = 1
-    state[13][13] = 1
+    const state = construct_matrix(MATRIX_SIZE)    
 
     for (let y = 0; y < state.length; y++) {
       for (let x = 0; x < state[y].length; x++) {
@@ -50,7 +45,7 @@
     }
     
     function checkNeighbours(x, y) {
-      const neighbors = []
+      const neighbours = []
 
       for (let dy = -1; dy <= 1; dy++) {
         for (let dx = -1; dx <= 1; dx++) {
@@ -61,21 +56,21 @@
 
           if (newX >= 0 && newX < MATRIX_SIZE && newY >= 0 && newY < MATRIX_SIZE) {
             if (state[newY][newX] > 0) {
-              neighbors.push(state[newY][newX])
+              neighbours.push(state[newY][newX])
             }
           }
         }
       }
 
-      const liveNeighbors = neighbors.length
+      const liveneighbours = neighbours.length
       const currentCell = state[y][x]
 
       if (currentCell > 0) {
-        if (liveNeighbors < 2) return 0
-        if (liveNeighbors === 2 || liveNeighbors === 3) return currentCell
-        if (liveNeighbors > 3) return 0
+        if (liveneighbours < 2) return 0
+        if (liveneighbours === 2 || liveneighbours === 3) return currentCell
+        if (liveneighbours > 3) return 0
       } else {
-        if (liveNeighbors === 3) return 1
+        if (liveneighbours === 3) return 1
       }
 
       return currentCell
