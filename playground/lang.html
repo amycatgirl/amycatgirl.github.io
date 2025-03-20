@@ -502,7 +502,7 @@
             }).catch(console.error)
           })
           
-          textarea.value = `== start by writting something\n\nlet your thoughts flow...\n\n{you have bold text} and _italic text_\nas well as\n\n- lists\n- with\n- multiple items\n\n-- oh and sections\n\nneed more? use html instead, we don't sanitize anything here :p\n\nhappy writting!\n\n---\n\nprobably more sooner or later, who knows`
+          textarea.value = `== start by writing something\n\nlet your thoughts flow...\n\n{you have bold text} and _italic text_\nas well as\n\n- lists\n- with\n- multiple items\n\n-- oh and sections\n\nneed more? use html instead, we don't sanitize anything here :p\n\nhappy writting!\n\n---\n\nprobably more sooner or later, who knows`
           
           const tokens = tokenize(textarea.value)
           const ast  = generateAST(textarea.value, tokens)
