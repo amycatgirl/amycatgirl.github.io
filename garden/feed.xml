@@ -1,1 +1,151 @@
-<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[ Amelia's Digital Garden ]]></title><description><![CDATA[ Notes, thoughts and random things from Amelia. ]]></description><link>https://amycatgirl.github.io</link><generator>amycatgirl's feedgen</generator><language>en-gb</language><lastBuildDate>Wed, 19 Feb 2025 09:23:00 GMT-4</lastBuildDate><ttl>18000</ttl><item><title><![CDATA[Test post]]></title><description><![CDATA[1, 2, 3, 4. Is this working?]]></description><link>https://amycatgirl.github.io</link><guid isPermaLink="true">https://amycatgirl.github.io</guid><pubDate>Sat, 14 Dec 2024 16:36:00 GMT-4</pubDate></item><item><title><![CDATA[Starting out]]></title><description><![CDATA[First blog post.]]></description><link>https://amycatgirl.github.io/garden/starting-out</link><guid isPermaLink="true">https://amycatgirl.github.io/garden/starting-out</guid><pubDate>Tue, 19 Nov 2024 17:36:00 GMT-4</pubDate></item><item><title><![CDATA[Slippy]]></title><description><![CDATA[Getting used to a slippy mindset]]></description><link>https://amycatgirl.github.io/garden/slippy</link><guid isPermaLink="true">https://amycatgirl.github.io/garden/slippy</guid><pubDate>Wed, 20 Nov 2024 07:37:00 GMT-4</pubDate></item><item><title><![CDATA[Coffee]]></title><description><![CDATA[mmm, coffee]]></description><link>https://amycatgirl.github.io/garden/coffee</link><guid isPermaLink="true">https://amycatgirl.github.io/garden/coffee</guid><pubDate>Thu, 21 Nov 2024 07:58:00 GMT-4</pubDate></item><item><title><![CDATA[Tools for thought]]></title><description><![CDATA[Making a markup language for fun.]]></description><link>https://amycatgirl.github.io/garden/tools-for-thought</link><guid isPermaLink="true">https://amycatgirl.github.io/garden/tools-for-thought</guid><pubDate>Wed, 27 Nov 2024 22:01:00 GMT-4</pubDate></item><item><title><![CDATA[Thanks]]></title><description><![CDATA[Small thanksgiving post, many thanks for those who supported me over the years.]]></description><link>https://amycatgirl.github.io/garden/thanks</link><guid isPermaLink="true">https://amycatgirl.github.io/garden/thanks</guid><pubDate>Fri, 29 Nov 2024 09:47:00 GMT-4</pubDate></item><item><title><![CDATA[The wonders of local-first]]></title><description><![CDATA[See, I am learning! Slow and steady wins the race.]]></description><link>https://amycatgirl.github.io/garden/local-first</link><guid isPermaLink="true">https://amycatgirl.github.io/garden/local-first</guid><pubDate>Sat, 30 Nov 2024 10:38:00 GMT-4</pubDate></item><item><title><![CDATA[Visual Programming]]></title><description><![CDATA[Scratch isn't that bad...]]></description><link>https://amycatgirl.github.io/garden/visual-programming</link><guid isPermaLink="true">https://amycatgirl.github.io/garden/visual-programming</guid><pubDate>Sun, 01 Dec 2024 20:37:00 GMT-4</pubDate></item><item><title><![CDATA[Focus]]></title><description><![CDATA[I haven't been diagnosed with anything related to ADHD, but I think it's about time to get tested.]]></description><link>https://amycatgirl.github.io/garden/focus</link><guid isPermaLink="true">https://amycatgirl.github.io/garden/focus</guid><pubDate>Mon, 02 Dec 2024 17:13:00 GMT-4</pubDate></item><item><title><![CDATA[Places]]></title><description><![CDATA[I've gone places]]></description><link>https://amycatgirl.github.io/garden/places</link><guid isPermaLink="true">https://amycatgirl.github.io/garden/places</guid><pubDate>Tue, 03 Dec 2024 22:07:00 GMT-4</pubDate></item><item><title><![CDATA[Voices]]></title><description><![CDATA[small explainer of my writing stylethanks todepond]]></description><link>https://amycatgirl.github.io/garden/voices</link><guid isPermaLink="true">https://amycatgirl.github.io/garden/voices</guid><pubDate>Thu, 05 Dec 2024 16:25:00 GMT-4</pubDate></item><item><title><![CDATA[Self]]></title><description><![CDATA[self-hatred and self-confidence don't go together]]></description><link>https://amycatgirl.github.io/garden/mind/palace/self</link><guid isPermaLink="true">https://amycatgirl.github.io/garden/mind/palace/self</guid><pubDate>Mon, 09 Dec 2024 20:33:00 GMT-4</pubDate></item><item><title><![CDATA[Communication]]></title><description><![CDATA[it's important]]></description><link>https://amycatgirl.github.io/garden/communication</link><guid isPermaLink="true">https://amycatgirl.github.io/garden/communication</guid><pubDate>Wed, 11 Dec 2024 21:19:00 GMT-4</pubDate></item><item><title><![CDATA[Collaboration]]></title><description><![CDATA[i like collaborative toolsyou should try them i think]]></description><link>https://amycatgirl.github.io/garden/collaboration</link><guid isPermaLink="true">https://amycatgirl.github.io/garden/collaboration</guid><pubDate>Sun, 15 Dec 2024 10:16:00 GMT-4</pubDate></item><item><title><![CDATA[Test post with markup]]></title><description><![CDATA[<p>I wonder, since I have CDATA blocks, will this get interpreted as HTML?</p><p>I mean, according to the XML spec, it means that any special tag characters<br/>won't be interpreted as part of a tag, so it <i>should</i> work.</p><p>This could be useful so i can also include the post in here.</p>]]></description><link>https://amycatgirl.github.io/garden</link><guid isPermaLink="true">https://amycatgirl.github.io/garden</guid><pubDate>Sun, 15 Dec 2024 10:35:00 GMT-4</pubDate></item><item><title><![CDATA[tired]]></title><description><![CDATA[<h1>tired</h1><p>im sleepy</p><p>these bean bags are to comffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</p>]]></description><link>https://amycatgirl.github.io/garden/tired</link><guid isPermaLink="true">https://amycatgirl.github.io/garden/tired</guid><pubDate>undefined, NaN undefined NaN NaN:NaN:00 GMT-4</pubDate></item><item><title><![CDATA[Dev log 1]]></title><description><![CDATA[<h1>dev log 1</h1><p>I'm making a new set of tools for my markup language, nyarkup, which I still do not have a proper name for.</p><p>Today, I tried to implement more token types on my lexer, but it turns out that I am approaching it as if it were a programming language.</p><p>I got the bold, italic, strike-through, section and divider tokens working, but the implementation that was discussed in the "Crafting Interpreters" book was made for—</p><p>yeah it's pretty bloody obvious that I messed up</p><p>Not a blocker though</p><h2>nix and helix and git and and and</h2><p>Recently, I got back into nix and home-manager stuff</p><p>Mainly because I wanted to use Kitty without installing it again when I inevitably migrate to another distro</p><p>But wowie, I was truly scratching the surface here</p><p>It's like a whole other world opened right in front of me</p><p>but eh, that magic will be gone soon enough</p><p>Oh and I am using helix now, in case any (neo)vim users were wondering</p><h2>back to compiler design again again again</h2><p>I might switch my approach for making that nyarkup compiler project</p><p>Probably tomorrow, probably next week</p><p>Who knows, really</p><p>But for now, all you can do is go back to the <a href="/garden" class="link blue">garden</a></p>]]></description><link>https://amycatgirl.github.io/garden/devlog1</link><guid isPermaLink="true">https://amycatgirl.github.io/garden/devlog1</guid><pubDate>Thu, 26 Dec 2024 22:36:00 GMT-4</pubDate></item><item><title><![CDATA[Hype]]></title><description><![CDATA[<h1>hype</h1><p>hype hype hype</p><p>everything is powered by hype</p><p>people leak stuff due to fomo<br>then hype increases<br>but what if you don't deliver</p><p>what if­–</p><hr><p>i've experienced hype multiple times</p><ul><li>that time when revolt first unveiled their new client</li><li>that other time when bsky was growing</li><li>that time when bunny (discord mobile mod) was announced</li></ul><p>but</p><ul><li>the client still isnt out</li><li>bsky has moderation issues</li><li>bunny is in maintenance mode</li></ul><p>what happens when you dont deliver</p><p>disappointment. that's what happens.</p><hr><p>i've learned that, hype, can be a double-edged sword</p><p>it can give your project that extra push it needed<br>but it can also add overhead</p><p>it can motivate you<br>but it can burn you out</p><p>too many eyes<br>too many people<br>too many–</p><hr><p>i don't like hype<br>let hype die out<br>let's move on<br>be patient<br>dont promise anything</p><p>dont hype <a href="/" class="link blue">my site</a></p>]]></description><link>https://amycatgirl.github.io/garden/hype</link><guid isPermaLink="true">https://amycatgirl.github.io/garden/hype</guid><pubDate>Thu, 16 Jan 2025 10:06:00 GMT-4</pubDate></item><item><title><![CDATA[Stuck]]></title><description><![CDATA[<h1>back</h1><p>hi it's been a while since my last post</p><p>you might be wondering, what happened to that promise you made on your first post?</p><p>well, let's say that life has different plans for me</p><h2>you see, this year has been rough so far</h2><p>i'm sure you know all about the terrible and dystopian things that the united states' current president has done in this short period</p><p>and i am someone who really worries about her friends. i mean, i have to, it's like i owe them something even though i don't.</p><p>i had a writer's block and couldn't write about anything in that period of time.</p><h2>unblocking</h2><p>i've tried many things to "unblock" myself, those being</p><ul><li>creating a separate journal to vent about my daily life</li><li>and being more open about my life to my friends and relatives</li></ul><p>but none of those have really helped me a lot</p><p>i stopped writing in that journal 3 days in, and being more open meant that i was getting the usual reactions from my friends</p><p>nothing really changed</p><h2>but then</h2><p>but then something clicked</p><p>i started to <em>draw</em></p><p>for those who haven't been following me for the past 2 years, i am a furry artist</p><p>i draw furries because i identify myself with cats, and by that i mean that i love cats so much that, if given the opportunity, i would be an anthro cat</p><p>but i haven't drawn in a very long time<br>only now i started to draw again<br>which means that i am rusty<br>which means that i had to—</p><h2>practice</h2><p>because</p><p><blockquote>"practice makes perfect"</blockquote></p><p>i stopped drawing because it felt like i wasn't improving at all<br>it felt like i was <em>stuck</em>,<br><span class="smaller">it felt like i</span> <em>couldn't get better</em><br><span class="smaller">it felt like it</span> <em>was a waste of time</em></p><p>but it wasn't</p><p>i was getting better, i just didn't have enough feedback to notice</p><h2>so maybe, maybe i could change</h2><p>maybe i could share my posts, get feedback, improve, grow</p><h2>and numbers don't matter</h2><p>they don't<br>to me, they are like if they weren't there<br>all i need is feedback from people, not from a machine</p><h2>back to the drawing board</h2><p>so, when art class came up today, i felt an urge to write <em>something</em></p><p>it could be anything, really<br>this is my garden after all, anything goes<br>even drafts if i want<br>it's not meant to be a place to talk about any specific topic</p><p>but this has been on my mind for quite a while, and i wanted to get it out of my system</p><p>i don't like being stuck, i want to <em>flow</em><br>i want to write things that might not make sense, but make sense to me<br>maybe, maybe, someone understands how i'm feeling<br>maybe not<br>and that's fine</p><p>in times of uncertainty, it's important to never give up<br>specially now, when the world might need you</p><p>now, go take a nice break at my <a href="/garden" class="link blue">garden</a>, you might need it</p>]]></description><link>https://amycatgirl.github.io/garden/mind/stuck.html</link><guid isPermaLink="true">https://amycatgirl.github.io/garden/mind/stuck.html</guid><pubDate>Wed, 19 Feb 2025 09:23:00 GMT-4</pubDate></item></channel></rss>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+	<channel>
+		<title><![CDATA[ Amelia's Digital Garden ]]></title>
+		<description><![CDATA[ Notes, thoughts and random things from Amelia. ]]></description>
+		<link>https://amycatgirl.github.io</link>
+		<generator>amycatgirl's feedgen</generator>
+		<language>en-gb</language>
+		<lastBuildDate>Thu, 20 Mar 2025 07:28:00 GMT-4</lastBuildDate>
+		<ttl>18000</ttl>
+		<item>
+			<title><![CDATA[Test post]]></title>
+			<description><![CDATA[1, 2, 3, 4. Is this working?]]></description>
+			<link>https://amycatgirl.github.io</link>
+			<guid isPermaLink="true">https://amycatgirl.github.io</guid>
+			<pubDate>Sat, 14 Dec 2024 16:36:00 GMT-4</pubDate>
+		</item>
+		<item>
+			<title><![CDATA[Starting out]]></title>
+			<description><![CDATA[First blog post.]]></description>
+			<link>https://amycatgirl.github.io/garden/starting-out</link>
+			<guid isPermaLink="true">https://amycatgirl.github.io/garden/starting-out</guid>
+			<pubDate>Tue, 19 Nov 2024 17:36:00 GMT-4</pubDate>
+		</item>
+		<item>
+			<title><![CDATA[Slippy]]></title>
+			<description><![CDATA[Getting used to a slippy mindset]]></description>
+			<link>https://amycatgirl.github.io/garden/slippy</link>
+			<guid isPermaLink="true">https://amycatgirl.github.io/garden/slippy</guid>
+			<pubDate>Wed, 20 Nov 2024 07:37:00 GMT-4</pubDate>
+		</item>
+		<item>
+			<title><![CDATA[Coffee]]></title>
+			<description><![CDATA[mmm, coffee]]></description>
+			<link>https://amycatgirl.github.io/garden/coffee</link>
+			<guid isPermaLink="true">https://amycatgirl.github.io/garden/coffee</guid>
+			<pubDate>Thu, 21 Nov 2024 07:58:00 GMT-4</pubDate>
+		</item>
+		<item>
+			<title><![CDATA[Tools for thought]]></title>
+			<description><![CDATA[Making a markup language for fun.]]></description>
+			<link>https://amycatgirl.github.io/garden/tools-for-thought</link>
+			<guid isPermaLink="true">https://amycatgirl.github.io/garden/tools-for-thought</guid>
+			<pubDate>Wed, 27 Nov 2024 22:01:00 GMT-4</pubDate>
+		</item>
+		<item>
+			<title><![CDATA[Thanks]]></title>
+			<description><![CDATA[Small thanksgiving post, many thanks for those who supported me over the years.]]></description>
+			<link>https://amycatgirl.github.io/garden/thanks</link>
+			<guid isPermaLink="true">https://amycatgirl.github.io/garden/thanks</guid>
+			<pubDate>Fri, 29 Nov 2024 09:47:00 GMT-4</pubDate>
+		</item>
+		<item>
+			<title><![CDATA[The wonders of local-first]]></title>
+			<description><![CDATA[See, I am learning! Slow and steady wins the race.]]></description>
+			<link>https://amycatgirl.github.io/garden/local-first</link>
+			<guid isPermaLink="true">https://amycatgirl.github.io/garden/local-first</guid>
+			<pubDate>Sat, 30 Nov 2024 10:38:00 GMT-4</pubDate>
+		</item>
+		<item>
+			<title><![CDATA[Visual Programming]]></title>
+			<description><![CDATA[Scratch isn't that bad...]]></description>
+			<link>https://amycatgirl.github.io/garden/visual-programming</link>
+			<guid isPermaLink="true">https://amycatgirl.github.io/garden/visual-programming</guid>
+			<pubDate>Sun, 01 Dec 2024 20:37:00 GMT-4</pubDate>
+		</item>
+		<item>
+			<title><![CDATA[Focus]]></title>
+			<description><![CDATA[I haven't been diagnosed with anything related to ADHD, but I think it's about time to get tested.]]></description>
+			<link>https://amycatgirl.github.io/garden/focus</link>
+			<guid isPermaLink="true">https://amycatgirl.github.io/garden/focus</guid>
+			<pubDate>Mon, 02 Dec 2024 17:13:00 GMT-4</pubDate>
+		</item>
+		<item>
+			<title><![CDATA[Places]]></title>
+			<description><![CDATA[I've gone places]]></description>
+			<link>https://amycatgirl.github.io/garden/places</link>
+			<guid isPermaLink="true">https://amycatgirl.github.io/garden/places</guid>
+			<pubDate>Tue, 03 Dec 2024 22:07:00 GMT-4</pubDate>
+		</item>
+		<item>
+			<title><![CDATA[Voices]]></title>
+			<description><![CDATA[small explainer of my writing stylethanks todepond]]></description>
+			<link>https://amycatgirl.github.io/garden/voices</link>
+			<guid isPermaLink="true">https://amycatgirl.github.io/garden/voices</guid>
+			<pubDate>Thu, 05 Dec 2024 16:25:00 GMT-4</pubDate>
+		</item>
+		<item>
+			<title><![CDATA[Self]]></title>
+			<description><![CDATA[self-hatred and self-confidence don't go together]]></description>
+			<link>https://amycatgirl.github.io/garden/mind/palace/self</link>
+			<guid isPermaLink="true">https://amycatgirl.github.io/garden/mind/palace/self</guid>
+			<pubDate>Mon, 09 Dec 2024 20:33:00 GMT-4</pubDate>
+		</item>
+		<item>
+			<title><![CDATA[Communication]]></title>
+			<description><![CDATA[it's important]]></description>
+			<link>https://amycatgirl.github.io/garden/communication</link>
+			<guid isPermaLink="true">https://amycatgirl.github.io/garden/communication</guid>
+			<pubDate>Wed, 11 Dec 2024 21:19:00 GMT-4</pubDate>
+		</item>
+		<item>
+			<title><![CDATA[Collaboration]]></title>
+			<description><![CDATA[i like collaborative toolsyou should try them i think]]></description>
+			<link>https://amycatgirl.github.io/garden/collaboration</link>
+			<guid isPermaLink="true">https://amycatgirl.github.io/garden/collaboration</guid>
+			<pubDate>Sun, 15 Dec 2024 10:16:00 GMT-4</pubDate>
+		</item>
+		<item>
+			<title><![CDATA[Test post with markup]]></title>
+			<description><![CDATA[<p>I wonder, since I have CDATA blocks, will this get interpreted as HTML?</p><p>I mean, according to the XML spec, it means that any special tag characters<br/>won't be interpreted as part of a tag, so it <i>should</i> work.</p><p>This could be useful so i can also include the post in here.</p>]]></description>
+			<link>https://amycatgirl.github.io/garden</link>
+			<guid isPermaLink="true">https://amycatgirl.github.io/garden</guid>
+			<pubDate>Sun, 15 Dec 2024 10:35:00 GMT-4</pubDate>
+		</item>
+		<item>
+			<title><![CDATA[tired]]></title>
+			<description><![CDATA[<h1>tired</h1><p>im sleepy</p><p>these bean bags are to comffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</p>]]></description>
+			<link>https://amycatgirl.github.io/garden/tired</link>
+			<guid isPermaLink="true">https://amycatgirl.github.io/garden/tired</guid>
+			<pubDate>undefined, NaN undefined NaN NaN:NaN:00 GMT-4</pubDate>
+		</item>
+		<item>
+			<title><![CDATA[Dev log 1]]></title>
+			<description><![CDATA[<h1>dev log 1</h1><p>I'm making a new set of tools for my markup language, nyarkup, which I still do not have a proper name for.</p><p>Today, I tried to implement more token types on my lexer, but it turns out that I am approaching it as if it were a programming language.</p><p>I got the bold, italic, strike-through, section and divider tokens working, but the implementation that was discussed in the "Crafting Interpreters" book was made for—</p><p>yeah it's pretty bloody obvious that I messed up</p><p>Not a blocker though</p><h2>nix and helix and git and and and</h2><p>Recently, I got back into nix and home-manager stuff</p><p>Mainly because I wanted to use Kitty without installing it again when I inevitably migrate to another distro</p><p>But wowie, I was truly scratching the surface here</p><p>It's like a whole other world opened right in front of me</p><p>but eh, that magic will be gone soon enough</p><p>Oh and I am using helix now, in case any (neo)vim users were wondering</p><h2>back to compiler design again again again</h2><p>I might switch my approach for making that nyarkup compiler project</p><p>Probably tomorrow, probably next week</p><p>Who knows, really</p><p>But for now, all you can do is go back to the <a href="/garden" class="link blue">garden</a></p>]]></description>
+			<link>https://amycatgirl.github.io/garden/devlog1</link>
+			<guid isPermaLink="true">https://amycatgirl.github.io/garden/devlog1</guid>
+			<pubDate>Thu, 26 Dec 2024 22:36:00 GMT-4</pubDate>
+		</item>
+		<item>
+			<title><![CDATA[Hype]]></title>
+			<description><![CDATA[<h1>hype</h1><p>hype hype hype</p><p>everything is powered by hype</p><p>people leak stuff due to fomo<br>then hype increases<br>but what if you don't deliver</p><p>what if­–</p><hr><p>i've experienced hype multiple times</p><ul><li>that time when revolt first unveiled their new client</li><li>that other time when bsky was growing</li><li>that time when bunny (discord mobile mod) was announced</li></ul><p>but</p><ul><li>the client still isnt out</li><li>bsky has moderation issues</li><li>bunny is in maintenance mode</li></ul><p>what happens when you dont deliver</p><p>disappointment. that's what happens.</p><hr><p>i've learned that, hype, can be a double-edged sword</p><p>it can give your project that extra push it needed<br>but it can also add overhead</p><p>it can motivate you<br>but it can burn you out</p><p>too many eyes<br>too many people<br>too many–</p><hr><p>i don't like hype<br>let hype die out<br>let's move on<br>be patient<br>dont promise anything</p><p>dont hype <a href="/" class="link blue">my site</a></p>]]></description>
+			<link>https://amycatgirl.github.io/garden/hype</link>
+			<guid isPermaLink="true">https://amycatgirl.github.io/garden/hype</guid>
+			<pubDate>Thu, 16 Jan 2025 10:06:00 GMT-4</pubDate>
+		</item>
+		<item>
+			<title><![CDATA[Stuck]]></title>
+			<description><![CDATA[<h1>back</h1><p>hi it's been a while since my last post</p><p>you might be wondering, what happened to that promise you made on your first post?</p><p>well, let's say that life has different plans for me</p><h2>you see, this year has been rough so far</h2><p>i'm sure you know all about the terrible and dystopian things that the united states' current president has done in this short period</p><p>and i am someone who really worries about her friends. i mean, i have to, it's like i owe them something even though i don't.</p><p>i had a writer's block and couldn't write about anything in that period of time.</p><h2>unblocking</h2><p>i've tried many things to "unblock" myself, those being</p><ul><li>creating a separate journal to vent about my daily life</li><li>and being more open about my life to my friends and relatives</li></ul><p>but none of those have really helped me a lot</p><p>i stopped writing in that journal 3 days in, and being more open meant that i was getting the usual reactions from my friends</p><p>nothing really changed</p><h2>but then</h2><p>but then something clicked</p><p>i started to <em>draw</em></p><p>for those who haven't been following me for the past 2 years, i am a furry artist</p><p>i draw furries because i identify myself with cats, and by that i mean that i love cats so much that, if given the opportunity, i would be an anthro cat</p><p>but i haven't drawn in a very long time<br>only now i started to draw again<br>which means that i am rusty<br>which means that i had to—</p><h2>practice</h2><p>because</p><p><blockquote>"practice makes perfect"</blockquote></p><p>i stopped drawing because it felt like i wasn't improving at all<br>it felt like i was <em>stuck</em>,<br><span class="smaller">it felt like i</span> <em>couldn't get better</em><br><span class="smaller">it felt like it</span> <em>was a waste of time</em></p><p>but it wasn't</p><p>i was getting better, i just didn't have enough feedback to notice</p><h2>so maybe, maybe i could change</h2><p>maybe i could share my posts, get feedback, improve, grow</p><h2>and numbers don't matter</h2><p>they don't<br>to me, they are like if they weren't there<br>all i need is feedback from people, not from a machine</p><h2>back to the drawing board</h2><p>so, when art class came up today, i felt an urge to write <em>something</em></p><p>it could be anything, really<br>this is my garden after all, anything goes<br>even drafts if i want<br>it's not meant to be a place to talk about any specific topic</p><p>but this has been on my mind for quite a while, and i wanted to get it out of my system</p><p>i don't like being stuck, i want to <em>flow</em><br>i want to write things that might not make sense, but make sense to me<br>maybe, maybe, someone understands how i'm feeling<br>maybe not<br>and that's fine</p><p>in times of uncertainty, it's important to never give up<br>specially now, when the world might need you</p><p>now, go take a nice break at my <a href="/garden" class="link blue">garden</a>, you might need it</p>]]></description>
+			<link>https://amycatgirl.github.io/garden/mind/stuck.html</link>
+			<guid isPermaLink="true">https://amycatgirl.github.io/garden/mind/stuck.html</guid>
+			<pubDate>Wed, 19 Feb 2025 09:23:00 GMT-4</pubDate>
+		</item>
+		<item>
+			<title><![CDATA[I am a bunny now]]></title>
+			<description><![CDATA[<h1>I became a bunny</h1><p>Yeah, I am now one.</p><p>This means no more meowing. No more purring. Pure body language and maybe some grunting.</p><p>I always thought I was a cat, from my core. People I love always told me that I behaved like one, probably for all the wrong reasons, but I took it to heart. After all, I did like cats, and I still do! But—</p><p>You might be wondering, what about your username? It says “catgirl”, you are no longer a catgirl, right? Yeah, correct. But that does not mean I should change it. Just because it says “cat” it means that I must “cat”, it gives the impression that I “cat”, which I did! But now I don't. And—</p><p><em>Gestures to a nearby whiteboard</em></p><p>It doesn't mean that I am restricted to whatever bunnies do, I am flexible after all. I change a lot. One day you might see me going completely non-verbal, and the other day I might do the complete opposite thing. After all, it's not like—</p><p>Oh, what made me change all of the sudden? A random thought. One of those weird ideas I have. The usual.</p><p>I guess it had something to do with trading names with one of my girlfriends who just happened to have a similar name to mine, maybe that was a catalyst. Can't be for certain, though.</p><p>Anyway, <a class="link green" href="/garden">how are my flowers doing?</a></p>]]></description>
+			<link>https://amycatgirl.github.io/garden/bunny</link>
+			<guid isPermaLink="true">https://amycatgirl.github.io/garden/bunny</guid>
+			<pubDate>Thu, 20 Mar 2025 07:28:00 GMT-4</pubDate>
+		</item>
+	</channel>
+</rss>
