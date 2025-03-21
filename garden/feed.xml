@@ -5,7 +5,7 @@
 		<link>https://amycatgirl.github.io</link>
 		<generator>amycatgirl's feedgen</generator>
 		<language>en-gb</language>
-		<lastBuildDate>Thu, 20 Mar 2025 07:42:00 GMT-4</lastBuildDate>
+		<lastBuildDate>Fri, 21 Mar 2025 07:44:00 GMT-4</lastBuildDate>
 		<ttl>18000</ttl>
 		<item>
 			<title><![CDATA[Test post]]></title>
@@ -146,6 +146,13 @@
 			<link>https://amycatgirl.github.io/garden/bunny</link>
 			<guid isPermaLink="true">https://amycatgirl.github.io/garden/bunny</guid>
 			<pubDate>Thu, 20 Mar 2025 07:28:00 GMT-4</pubDate>
+		</item>
+		<item>
+			<title><![CDATA[Body]]></title>
+			<description><![CDATA[<h1>Body</h1><p>Since I was very little, I didn't like my body. I didn't like how it looked; I didn't like how I feel, but my familiars constantly reassured me that I was beautiful in my own way.</p><p>Maybe they were right about that, maybe I did look good. But to me— But I didn't agree with them.</p><p>I've tried to do many things with myself, shaving, cutting hair, experimented with skin care routines and even tried attempted to use body shaving cream.</p><p>And so far, I have my hopes in the last option. It's a tiny form of self-expression, of who I want to be, to look like. Even of the change is miniscule, it's still change after all, small actions lead to big changes.</p>]]></description>
+			<link>https://amycatgirl.github.io/garden/mind/body</link>
+			<guid isPermaLink="true">https://amycatgirl.github.io/garden/mind/body</guid>
+			<pubDate>Fri, 21 Mar 2025 07:44:00 GMT-4</pubDate>
 		</item>
 	</channel>
 </rss>
