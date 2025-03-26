@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
     <!-- Fancy seeing you here, mx. haxx0r ;) -->
-    <!-- Source code is available on github under amycatgirl/amycatgirl.github.io -->
+    <!-- Source code is available on GitHub under amycatgirl/amycatgirl.github.io -->
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="preload" type="text/css" as="style" href="/assets/noto.css">
-        <link rel="preload" type="font/ttf" as="font" href="/assets/NotoEmoji-Light.ttf">
-        <link rel="preload" type="font/ttf" as="font" href="/assets/NotoColorEmoji-Regular.ttf">
+        <link rel="preload" type="text/css" as="style"  href="./assets/noto.css">
+        <link rel="preload" type="font/ttf" as="font" href="./assets/NotoEmoji-Light.ttf">
+        <link rel="preload" type="font/ttf" as="font" href="./assets/NotoColorEmoji-Regular.ttf">
         <link rel="alternate" type="application/rss+xml" title="Amelia's Digital Garden" href="https://amycatgirl.github.io/garden/feed">
         <title>Amy</title>
     </head>
@@ -15,8 +15,6 @@
         <div class="center-everything">
             <h1>Hello, I am Amy</h1>
             <p>Welcome to my site. Get some coffee, sit down, and <i>relax</i>.</p>
-            
-            
             <hr/>
             <p>I make stuff, mainly revolt related. but i am venturing towards the unknown, learning more skills as i go</p>
             <p>follow my journey, into</p>
@@ -33,97 +31,42 @@
                 <li><a class="link red" href="playground/">playground</a></li>
             </ul>
         </div>
-        
-        <div class="floating">
+
+        <div class="floatbehind">
+            <span class="debug" id="mouse_pos">0x0</span>
+            <canvas id="bubbledisplay"></canvas>
         </div>
+        <script defer src="common/bubbles.js"></script>
     </body>
-
-    <script type="module">  
-    let bubbleCounter = 0;
-    let activeBubbles = new Set();
-
-    function createBubble() {
-        if (activeBubbles.size >= 10) {
-            const oldestBubble = document.getElementById([...activeBubbles][0]);
-            if (oldestBubble) {
-                oldestBubble.remove();
-                activeBubbles.delete([...activeBubbles][0]);
-            }
-        }
-
-        const bubble = document.createElement('div'); 
-        const id = `bubble-${bubbleCounter++}`;
-        bubble.id = id;
-        bubble.className = 'bubble';
-        bubble.textContent = '○';
-        bubble.style.position = 'absolute';
-        bubble.style.left = `${(Math.random() * 60) + 20}%`;
-
-        // Add click handler directly to bubble
-        bubble.addEventListener('mousedown', function(event) {
-            event.preventDefault();
-            this.textContent = '•';
-            this.style.transition = 'transform 0.5s, opacity 0.5s ease-out';
-            this.style.transform += 'scale(2)';
-            this.style.opacity = '0';
-            setTimeout(() => {
-                this.remove();
-                activeBubbles.delete(this.id);
-            }, 200);
-        });
-
-        document.querySelector('.floating').appendChild(bubble);
-        activeBubbles.add(id);
-
-        animateBubble(bubble);
-    }
-
-    function animateBubble(element) {
-        let start;
-
-        // Get height of center-everything div
-        const centeredContent = document.querySelector('.center-everything');
-        const contentHeight = centeredContent.offsetHeight;
-
-        // Random end point between middle and top
-        const maxShift = Math.floor(Math.random() * (contentHeight - contentHeight/2)) + contentHeight/2;
-
-        function step(timestamp) {
-            if (start === undefined) {
-                start = timestamp;
-            }
-            const elapsed = timestamp - start;
-
-            const shift = Math.min(0.1 * elapsed, maxShift);
-            const base_scale = Math.min(elapsed / 200, 1); // Scale up over 200ms
-            const bounce = Math.sin(elapsed/50) * 0.1 * Math.max(0, 1 - elapsed/400); // Bouncy effect that fades out
-            const scale = base_scale * (1 + bounce);
-            const opacity = shift < maxShift-20 ? 0.2 : 0.2 - ((shift - (maxShift-20)) / 100);
-            element.style.transform = `translateY(-${shift}px) scale(${scale})`;
-            element.style.opacity = opacity;
-
-            if (shift < maxShift) {
-                requestAnimationFrame(step);
-            } else {
-                element.remove();
-            }
-        }
-
-        requestAnimationFrame(step);
-    }
-
-    // Create new bubbles periodically
-    setInterval(createBubble, 2000);
-    createBubble(); // Create first bubble immediately
-    </script>
     
     <style>
+        @import url("./assets/noto.css");
+
+        .floatbehind {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: fit-content;
+            display: flex;
+            z-index: -1;
+        }
+
+        .debug {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            padding: 5px;
+            background: #00000044;
+        }
+
         .smaller {
             font-size: .5em;
             opacity: 75%;
         }
         
         div.center-everything {
+            padding: 10px;
             max-width: 50%;
             display: grid;
             
@@ -147,6 +90,8 @@
             background-color: #2e1a29;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', 'Inter', 'Noto Color Emoji', sans-serif;
             color: white;
+            height: 100vh;
+            margin: 0;
         }
         
         ul {
