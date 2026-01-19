@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>amy's website</title>
+</head>
+
+<body>
+    <main>
+        <h1>i'm amy</h1>
+        <p>i am a frontend developer that currently works for: [no one]</p>
+        <p>currently aiding <a href="https://github.com/stoatchat">stoat.chat</a> with fixing bugs and cosplaying as a
+            support agent</p>
+        <h2>my projects</h2>
+        <ul>
+            <li><a href="https://github.com/amycatgirl/codehub">codehub</a></li>
+            <li><a href="https://github.com/amycatgirl/tempstore">tempstore</a></li>
+        </ul>
+
+        <h2>contact</h2>
+        <ul>
+            <li><a class="handle" rel="me" href="https://github.com/amycatgirl">@amycatgirl</a> on github</li>
+            <li><a class="handle" rel="me"
+                    href="https://bsky.app/profile/did:plc:gijpvbkdbr56kazbdjhfvb3d">@amybunny.tgirl.gay</a> on atproto
+            </li>
+            <li><span class="handle">@amybunny.01</span> on signal</li>
+        </ul>
+
+        <p>i also have a blog on <a href="https://amybunny.leaflet.pub">leaflet</a>, here are it's latest entries:</p>
+        <div id="atproto-leaflet">
+            <noscript>
+                <p>
+                    it seems your browser doesn't support javascript, this section is dynamic so it won't render.
+                </p>
+            </noscript>
+        </div>
+    </main>
+    <div class="margin-wrapper">
+        <div class="margin" />
+    </div>
+
+    <style>
+        @import url("/assets/iosevka/Iosevka.css");
+
+        :root {
+            --font: "Iosevka";
+            --bg: #fbf8ef;
+            --fg: #655370;
+            --emphasis: #3a81c3;
+        }
+
+        body {
+            margin-block: 0;
+            overflow: hidden;
+            min-height: 100vh;
+            display: grid;
+            grid-template-areas: "content margin";
+            grid-template-columns: 1fr 1fr;
+
+            background-color: var(--bg);
+            color: var(--fg);
+            font-family: var(--font);
+        }
+
+        main {
+            grid-area: content;
+        }
+
+        ul { padding-left: 1rem;}
+        li::marker { content: "* "; }
+
+        .margin-wrapper {
+            grid-area: margin;
+            display: grid;
+            grid-template-areas: ". right";
+            grid-template-columns: 2fr .5fr;
+        }
+
+        .margin {
+            position: relative;
+            grid-area: right;
+            height: 105%;
+            top: -3%;
+            width: 10rem;
+
+            border-right: 50px var(--fg);
+            border-right-style: dotted;
+            opacity: .1;
+        }
+
+        h1 {
+            font-weight: 800;
+        }
+
+        a {
+            color: var(--emphasis);
+        }
+
+        .entry {
+            box-sizing: border-box;
+            position: relative;
+
+            padding: 5px 10px;
+            border: 1px solid black;
+
+            & .base-anchor {
+                position: static;
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    display: block;
+
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                }
+
+                &::after {
+                    content: url("data:image/svg+xml,%3Csvg viewBox='0 0 7 7' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.04261 6.80966L0.377841 6.14489L5.32102 1.19318H1.50284L1.51136 0.272727H6.90625V5.67614H5.97727L5.9858 1.85795L1.04261 6.80966Z' fill='black'/%3E%3C/svg%3E%0A");
+                    position: absolute;
+                    display: block;
+                    bottom: 1rem;
+                    right: 1rem;
+                    width: 12px;
+                    height: 12px;
+                }
+            }
+
+            & .title {
+                margin-top: 5px;
+                text-decoration: underline;
+            }
+        }
+    </style>
+
+    <template id="leaflet-entry">
+        <div class="entry">
+            <a class="base-anchor" href="#"></a>
+            <h3 class="title"></h3>
+            <p class="description"></p>
+            <div class="metadata">
+                <time class="published-at"></time>
+            </div>
+        </div>
+    </template>
+
+    <script type="module">
+        // First test if this browser supports templates
+        if (!"content" in document.createElement("template")) {
+            throw "This browser does not support HTML Template API, please update or change your browser."
+        }
+
+        // Configuration options
+        const COLLECTION_NSID = "pub.leaflet.document";
+        const USER_DID = "did:plc:gijpvbkdbr56kazbdjhfvb3d";
+        const USER_PDS = "https://porcini.us-east.host.bsky.network";
+        const MAX_LATEST_POSTS = 5;
+
+        // Definitions
+        /** @type {HTMLTemplateElement} */
+        const ENTRY_TEMPLATE = document.getElementById("leaflet-entry")
+
+        const DATE_FORMATTER = new Intl.DateTimeFormat("en-GB", {
+            timeStyle: "short",
+            dateStyle: "short"
+        })
+
+        /**
+         * @param {{ title: string, description: string, url: string, date: Date }} leaflet_entry
+         * @returns {HTMLDivElement}
+         */
+        function buildEntry(leaflet_entry) {
+            const entry = document.importNode(ENTRY_TEMPLATE.content, true)
+            entry.querySelector(".base-anchor").href = leaflet_entry.url;
+            entry.querySelector(".title").textContent = leaflet_entry.title;
+            const date_el = entry.querySelector(".published-at");
+            date_el.datetime = leaflet_entry.date.toISOString();
+            date_el.textContent = DATE_FORMATTER.format(leaflet_entry.date);
+            entry.querySelector(".description").textContent = leaflet_entry.description;
+
+            return entry;
+        }
+
+        /**
+         * @returns {Promise<object>}
+         */
+        async function getLatestPosts() {
+            const { records } = await (await fetch(`${USER_PDS}/xrpc/com.atproto.repo.listRecords?repo=${USER_DID}&collection=${COLLECTION_NSID}&limit=${MAX_LATEST_POSTS}`)).json()
+
+            return records
+        }
+
+        // HTML
+        const leaflet_container = document.getElementById("atproto-leaflet");
+
+        const posts = await getLatestPosts()
+        for (const document of posts) {
+            const { title, description, publication, publishedAt } = document.value;
+
+            leaflet_container.append(buildEntry({
+                title: document.value.title,
+                description: document.value.description,
+                url: `https://amybunny.leaflet.pub/${document.uri.split("/").at(-1)}`,
+                date: new Date(publishedAt)
+            }))
+        }
+    </script>
+</body>
+
+</html>
