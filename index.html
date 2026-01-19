@@ -96,6 +96,7 @@
 
         a {
             color: var(--emphasis);
+            & h3 { color: var(--fg); }
         }
 
         .entry {
@@ -139,8 +140,7 @@
 
     <template id="leaflet-entry">
         <div class="entry">
-            <a class="base-anchor" href="#"></a>
-            <h3 class="title"></h3>
+            <a class="base-anchor" href="#"><h3 class="title"></h3></a>
             <p class="description"></p>
             <div class="metadata">
                 <time class="published-at"></time>
