@@ -13,10 +13,14 @@
         <p>i am a frontend developer that currently works for: [no one]</p>
         <p>currently aiding <a href="https://github.com/stoatchat">stoat.chat</a> with fixing bugs and cosplaying as a
             support agent</p>
+
+        <p>i can work with javascript and typescript. but i am a quick learner, and have worked with python, kotlin, java, nix, clojure, and lisp dialects like common lisp and scheme.</p>
         <h2>my projects</h2>
         <ul>
-            <li><a href="https://github.com/amycatgirl/codehub">codehub</a></li>
-            <li><a href="https://github.com/amycatgirl/tempstore">tempstore</a></li>
+            <li><a href="https://github.com/amycatgirl/codehub">codehub</a> (go)</li>
+            <li><a href="https://github.com/amycatgirl/tempstore">tempstore</a> (typescript)</li>
+            <li><a href="https://github.com/amycatgirl/clordle">clordle</a> (clojure)</li>
+            <li><a href="https://github.com/upryzing/crescent">crescent</a> (kotlin, unmaintained)</li>
         </ul>
 
         <h2>contact</h2>
@@ -53,18 +57,24 @@
 
         body {
             margin-block: 0;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: scroll;
             min-height: 100vh;
             display: grid;
             grid-template-areas: "content margin";
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: minmax(435px, 50%) 1fr;
 
             background-color: var(--bg);
             color: var(--fg);
             font-family: var(--font);
         }
 
+        p {
+            text-wrap: pretty;
+        }
+
         main {
+            z-index: 2;
             grid-area: content;
         }
 
@@ -72,6 +82,7 @@
         li::marker { content: "* "; }
 
         .margin-wrapper {
+            z-index: 1;
             grid-area: margin;
             display: grid;
             grid-template-areas: ". right";
@@ -134,6 +145,24 @@
             & .title {
                 margin-top: 5px;
                 text-decoration: underline;
+            }
+        }
+
+        @media screen and (max-width: 653px) {
+            body {
+                grid-template-areas:
+                    "content"
+                    "margin";
+
+                grid-template-columns: 100%;
+            }
+
+            main {
+                margin-inline: 1rem;
+            }
+
+            .margin-wrapper {
+                display: none;
             }
         }
     </style>
