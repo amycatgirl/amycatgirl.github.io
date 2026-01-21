@@ -4,9 +4,6 @@
 (defconst atproto-pds "https://porcini.us-east.host.bsky.network")
 (defconst max-entries 5)
 
-(defun search-leaflet-fallback-block ()
-  )
-
 (defun at-datetime->timestamp (dt)
   (date-to-time dt))
 
@@ -14,7 +11,7 @@
   (format-time-string "%d/%m/%Y, %H:%M" ts))
 
 (defun build-leaflet-html-entry (title description date date-humanreadable url)
-  (format "<div class=\"entry\">\n<a class=\"base-anchor\" href=\"https://amybunny.leaflet.pub/%s\"></h3 class=\"title\">%s</h3></a>\n<p class=\"description\">%s</p>\n<div class=\"metadata\">\n<time datetime=%S class=\"published-at\">%s</time>\n</div>\n</div>" url title description date date-humanreadable))
+  (format "<div class=\"entry\">\n<a class=\"base-anchor\" href=\"https://amybunny.leaflet.pub/%s\"><h3 class=\"title\">%s</h3></a>\n<p class=\"description\">%s</p>\n<div class=\"metadata\">\n<time datetime=%S class=\"published-at\">%s</time>\n</div>\n</div>" url title description date date-humanreadable))
 
 (defun fetch-latest-entries ()
   (let ((url-request-method "GET")
@@ -46,5 +43,6 @@
       (insert "\n")
       (dolist (element (build-elements-from-entries (fetch-latest-entries)))
 	(insert (concat element "\n")))
-      (indent-region block-start (search-forward "</noscript>" nil t)))))
+      (indent-region block-start (search-forward "</noscript>" nil t))))
+  (save-buffer))
 
