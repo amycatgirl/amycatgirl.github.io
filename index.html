@@ -15,7 +15,8 @@
         <p>currently aiding <a href="https://github.com/stoatchat">stoat.chat</a> with fixing bugs and cosplaying as a
             support agent</p>
 
-        <p>i can work with javascript and typescript. but i am a quick learner, and have worked with python, kotlin, java, nix, clojure, and lisp dialects like common lisp and scheme.</p>
+        <p>i can work with javascript and typescript. but i am a quick learner, and have worked with python, kotlin,
+            java, nix, clojure, and lisp dialects like common lisp and scheme.</p>
         <h2>my projects</h2>
         <ul>
             <li><a href="https://github.com/amycatgirl/codehub">codehub</a> (go)</li>
@@ -36,9 +37,15 @@
         <p>i also have a blog on <a href="https://amybunny.leaflet.pub">leaflet</a>, here are it's latest entries:</p>
         <div id="atproto-leaflet">
             <noscript>
-                <p>
-                    it seems your browser doesn't support javascript, this section is dynamic so it won't render.
-                </p>
+                <div class="entry">
+                    <a class="base-anchor" href="https://amybunny.leaflet.pub/3mbqvkp6l6c27"></h3 class="title">my 2026
+                        bucket
+                        list</h3></a>
+                    <p class="description">things that i want to do this year</p>
+                    <div class="metadata">
+                        <time datetime="2026-01-06T11:57:30.149Z" class="published-at">06/01/2026, 07:57</time>
+                    </div>
+                </div>
             </noscript>
         </div>
     </main>
@@ -79,8 +86,13 @@
             grid-area: content;
         }
 
-        ul { padding-left: 1rem;}
-        li::marker { content: "* "; }
+        ul {
+            padding-left: 1rem;
+        }
+
+        li::marker {
+            content: "* ";
+        }
 
         .margin-wrapper {
             z-index: 1;
@@ -108,7 +120,10 @@
 
         a {
             color: var(--emphasis);
-            & h3 { color: var(--fg); }
+
+            & h3 {
+                color: var(--fg);
+            }
         }
 
         .entry {
@@ -170,7 +185,9 @@
 
     <template id="leaflet-entry">
         <div class="entry">
-            <a class="base-anchor" href="#"><h3 class="title"></h3></a>
+            <a class="base-anchor" href="#">
+                <h3 class="title"></h3>
+            </a>
             <p class="description"></p>
             <div class="metadata">
                 <time class="published-at"></time>
