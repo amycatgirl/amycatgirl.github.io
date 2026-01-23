@@ -38,6 +38,13 @@
         <div id="atproto-leaflet">
           <noscript>
 	    <div class="entry">
+	      <a class="base-anchor" href="https://amybunny.leaflet.pub/3md2f4slp5c23"><h3 class="title">TIL: Finesse faults</h3></a>
+	      <p class="description">nil</p>
+	      <div class="metadata">
+		<time datetime="2026-01-22T23:55:10.383Z" class="published-at">22/01/2026, 19:55</time>
+	      </div>
+	    </div>
+	    <div class="entry">
 	      <a class="base-anchor" href="https://amybunny.leaflet.pub/3mbqvkp6l6c27"><h3 class="title">my 2026 bucket list</h3></a>
 	      <p class="description">things that i want to do this year</p>
 	      <div class="metadata">
@@ -130,6 +137,7 @@
 
             padding: 5px 10px;
             border: 1px solid black;
+            &:not(:first-child) { margin-top: .5rem; }
 
             & .base-anchor {
                 position: static;
@@ -200,7 +208,7 @@
         }
 
         // Configuration options
-        const COLLECTION_NSID = "pub.leaflet.document";
+        const COLLECTION_NSIDS = ["pub.leaflet.document", "site.standard.document"];
         const USER_DID = "did:plc:gijpvbkdbr56kazbdjhfvb3d";
         const USER_PDS = "https://porcini.us-east.host.bsky.network";
         const MAX_LATEST_POSTS = 5;
@@ -231,21 +239,34 @@
         }
 
         /**
+         * @param {string} nsid
          * @returns {Promise<object>}
          */
-        async function getLatestPosts() {
-            const { records } = await (await fetch(`${USER_PDS}/xrpc/com.atproto.repo.listRecords?repo=${USER_DID}&collection=${COLLECTION_NSID}&limit=${MAX_LATEST_POSTS}`)).json()
+        async function getLatestPosts(nsid) {
+            const { records } = await (await fetch(`${USER_PDS}/xrpc/com.atproto.repo.listRecords?repo=${USER_DID}&collection=${nsid}&limit=${MAX_LATEST_POSTS}`)).json()
 
-            return records
+            return records.toReversed()
         }
 
         // HTML
         const leaflet_container = document.getElementById("atproto-leaflet");
 
-        const posts = await getLatestPosts()
+        const posts = (await Promise.all(COLLECTION_NSIDS.map(async (nsid) => await getLatestPosts(nsid))))
+                        .flat(1)
+                        .sort((entry_a, entry_b) => {
+                            const date_a = new Date(entry_a.value.publishedAt)
+                            const date_b = new Date(entry_b.value.publishedAt)
+
+                            console.log(date_a)
+                            console.log(date_b)
+
+                            return date_b - date_a
+                        });
+
         for (const document of posts) {
             const { title, description, publication, publishedAt } = document.value;
-
+    
+            // TODO: make platform agnostic
             leaflet_container.append(buildEntry({
                 title: document.value.title,
                 description: document.value.description,
@@ -253,6 +274,7 @@
                 date: new Date(publishedAt)
             }))
         }
+
     </script>
 </body>
 
