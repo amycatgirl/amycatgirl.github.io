@@ -1,5 +1,5 @@
 ;; -*- lexical-binding: t; -*-
-(defconst atproto-collection-nsids '("pub.leaflet.document" "site.standard.document"))
+(defconst atproto-collection-nsids '("site.standard.document"))
 (defconst atproto-user-did "did:plc:gijpvbkdbr56kazbdjhfvb3d")
 (defconst atproto-pds "https://porcini.us-east.host.bsky.network")
 (defconst max-entries 5)
