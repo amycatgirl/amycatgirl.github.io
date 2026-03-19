@@ -27,7 +27,7 @@
 		   (url (car (last (string-split (gethash "uri" rec) "\/+")))))
 	      (build-leaflet-html-entry
 	       (gethash "title" document-info)
-	       (gethash "description" document-info)
+	       (or (gethash "description" document-info) "")
 	       (gethash "publishedAt" document-info)
 	       (timestamp->humanreadable-string (at-datetime->timestamp (gethash "publishedAt" document-info)))
 	       url)))
