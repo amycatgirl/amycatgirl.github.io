@@ -1,7 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 (defconst atproto-collection-nsids '("site.standard.document"))
 (defconst atproto-user-did "did:plc:gijpvbkdbr56kazbdjhfvb3d")
-(defconst atproto-pds "https://porcini.us-east.host.bsky.network")
+(defconst atproto-pds "https://rose.madebydanny.uk")
 (defconst max-entries 5)
 
 (defun at-datetime->timestamp (dt)
