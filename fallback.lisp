@@ -1,15 +1,62 @@
 ;; amycatgirl.github.io no-js fallback
 ;; Last authored: Thu 19 Mar 18:41:03 AST 2026
+;; Depends on: drakma, cl-json, uiop
+
+(ql:quickload '(drakma yason uiop cl-ppcre trivia))
 
 (defconstant +user_did+ "")
 (defconstant +max-entries+ 5)
 
+(defmacro run-command (command)
+  `(uiop:run-program ,command :output '(:string :stripped t)))
+
 ;; Git
-(defun git-add (files))
-(defun git-commit (message))
+(defun git-add (&rest files)
+  (run-command `("git" "add" ,@files)))
+
+(defun git-commit (message)
+  (run-command `("git" "commit" "-m" ,(concatenate 'string "[fallback-gen] " message))))
+
+(defun make-request (where)
+  (let ((stream (drakma:http-request where
+				     :want-stream t
+				     :user-agent "amycatgirl.github.io/1.0")))
+    (setf (flexi-streams:flexi-stream-external-format stream) :utf-8)
+    (yason:parse stream :object-as :plist :object-key-fn #'intern)))
 
 ;; ATProto
-(defun resolve-pds (did))
+;;; DID
+(defun resolve-did-document--plc (did)
+  (make-request (format nil "https://plc.directory/~a" did)))
+
+(defun resolve-did-document--web (did)
+  "Resolve a DID document via DID:WEB method.
+See https://w3c-ccg.github.io/did-method-web/ for specification details."
+  (let* ((document-location (subseq did (length "did:web:")))
+	 (qualified-path (concatenate 'string "https://" document-location "/.well-known/did.json"))
+	 (document (make-request qualified-path)))
+    (if (equal (getf document (intern "id")) did)
+	document
+	(error "Could not resolve document from did:web ~S" did))))
+
+(defun get-did-method (did)
+  (cl-ppcre:register-groups-bind (method) ("^did:([a-z]+):[a-zA-Z0-9._:%-]*[a-zA-Z0-9._-]$" did)
+   method))
+
+(defun resolve-pds (did)
+  "Resolve a PDS by DID."
+  (let* ((did-method (get-did-method did))
+	 (document (trivia:match did-method
+		     ("web" (resolve-did-document--web did))
+		     ("plc" (resolve-did-document--plc did))
+		     (_ (error "Unsuported DID method ~S" did-method))))
+	 (services (getf document (intern "service"))))
+    (getf (find-if (lambda (service)
+		     (equal (getf service (intern "id")) "#atproto_pds"))
+		   services)
+	  (intern "serviceEndpoint"))))
+
+;;; PDS
 (defun fetch-entries (did pds max))
 (defun build-elements-from-entries (entries))
 
