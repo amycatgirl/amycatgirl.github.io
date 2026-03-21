@@ -72,7 +72,6 @@ See https://w3c-ccg.github.io/did-method-web/ for specification details."
 		     ("plc" (resolve-did-document--plc did))
 		     (_ (error "Unsuported DID method ~S" did-method))))
 	 (services (getf document :service)))
-    (print document)
     (getf (find-if (lambda (service)
 		     (equal (getf service :id) "#atproto_pds"))
 		   services)
