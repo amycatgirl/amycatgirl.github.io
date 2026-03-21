@@ -14,13 +14,19 @@
 (defun keywordize (name)
   (intern (string-upcase name) "KEYWORD"))
 
+(defmacro get-in-plist (place indicators)
+  (let ((rev-indicators (reverse indicators)))
+    (labels ((construct (y ys) (cond
+				 ((null ys) (list 'getf place y))
+				 (t (list 'getf (construct (car ys) (cdr ys)) y)))))
+      (construct (car rev-indicators) (cdr rev-indicators)))))
+
 ;; Git
 (defun git-add (&rest files)
   (run-command `("git" "add" ,@files)))
 
 (defun git-commit (message)
   (run-command `("git" "commit" "-m" ,(concatenate 'string "[fallback-gen] " message))))
-
 ;; HTTP
 (defun build-query-params-from-plist (parameters)
   "Build a string of URL-encoded query parameters from a plist."
