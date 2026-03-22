@@ -95,7 +95,27 @@ Aditional query parameters in the request must be passed inside of `query', wher
 		      :limit maximum)))
 
 ;; Generator
-(defun build-elements-from-entries (entries))
-(defun sort-entries-by-date (entries))
-(defun generate-html ())
+(defun published-at-element (date)
+  (let ((time (local-time:parse-timestring date)))
+    (spinneret:with-html
+      (:time.published-at :attrs (list :datetime date)
+			  (local-time:format-timestring nil time :format '((:day 2) "/" (:month 2) "/" :year ", "
+									   (:hour 2) #\: (:min 2)))))))
+
+(defun entry-element (entry)
+  (let ((title (get-in-plist entry (:value :title)))
+	(description (or (get-in-plist entry (:value :description)) ""))
+	(date (get-in-plist entry (:value :publishedat)))
+	(link "todo"))
+    (spinneret:with-html-string
+      (:div.entry
+       (:a.base-anchor :href link
+		       (:h3.title title))
+       (:p.description description)
+       (:div.metadata
+	(published-at-element date))))))
+
+(defun generate-html (entries)
+  (mapcar #'entry-element entries))
+
 (defun publish ())
