@@ -1,6 +1,6 @@
 ;; amycatgirl.github.io no-js fallback
 ;; Last authored: Thu 19 Mar 18:41:03 AST 2026
-;; Depends on: drakma, cl-json, uiop
+;; Depends on: drakma, yason, uiop, cl-ppcre, trivia, alexandria, spinneret, local-time
 
 (ql:quickload '(drakma yason uiop cl-ppcre trivia alexandria spinneret local-time))
 
