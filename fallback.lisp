@@ -2,9 +2,12 @@
 ;; Last authored: Thu 19 Mar 18:41:03 AST 2026
 ;; Depends on: drakma, cl-json, uiop
 
-(ql:quickload '(drakma yason uiop cl-ppcre trivia alexandria))
+(ql:quickload '(drakma yason uiop cl-ppcre trivia alexandria spinneret local-time))
 
-(defconstant +user_did+ "")
+(defconstant +user_did+ "did:plc:gijpvbkdbr56kazbdjhfvb3d")
+(defconstant +viewer+ "https://amybunny.leaflet.pub/%s"
+  "URL to standard.site compliant viewer. Default is leaflet.
+%s is passed to `format' with the CID of the record.")
 (defconstant +max-entries+ 5)
 
 ;; utilities
