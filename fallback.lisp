@@ -4,11 +4,13 @@
 
 (ql:quickload '(drakma yason uiop cl-ppcre trivia alexandria spinneret local-time))
 
-(defconstant +user_did+ "did:plc:gijpvbkdbr56kazbdjhfvb3d")
-(defconstant +viewer+ "https://amybunny.leaflet.pub/%s"
+(defconstant +user-did+ "did:plc:gijpvbkdbr56kazbdjhfvb3d"
+  "DID of the user to fetch entries from")
+(defconstant +viewer+ "https://amybunny.leaflet.pub/~A"
   "URL to standard.site compliant viewer. Default is leaflet.
-%s is passed to `format' with the CID of the record.")
-(defconstant +max-entries+ 5)
+~A is passed to `format' with the CID of the record.")
+(defconstant +max-entries+ 5
+  "Maximum amount of entries fetched.")
 
 ;; utilities
 (defmacro run-command (command)
@@ -30,6 +32,9 @@
 
 (defun git-commit (message)
   (run-command `("git" "commit" "-m" ,(concatenate 'string "[fallback-gen] " message))))
+
+(defun git-push ()
+  (run-command '("git push")))
 ;; HTTP
 (defun build-query-params-from-plist (parameters)
   "Build a string of URL-encoded query parameters from a plist."
@@ -106,7 +111,7 @@ Aditional query parameters in the request must be passed inside of `query', wher
   (let ((title (get-in entry (:value :title)))
 	(description (or (get-in entry (:value :description)) ""))
 	(date (get-in entry (:value :publishedat)))
-	(link "todo")
+	(link (format nil +viewer+ (car (last (uiop:split-string (getf entry :uri) :separator '(#\/))))))
 	(spinneret:*html-style* :tree))
     (spinneret:with-html-string
       (:div.entry
@@ -117,4 +122,32 @@ Aditional query parameters in the request must be passed inside of `query', wher
 	(published-at-element date))))))
 
 (defun generate-html (entries)
-  (format nil "~{~A~^\n~}" (mapcar #'entry-element entries)))
+  (format nil "~%~{~A~^~%~}~%" (mapcar #'entry-element entries)))
+
+(defun read-file-to-string (path)
+  (with-open-file (stream path :direction :input :if-does-not-exist :error)
+    (let ((buf (make-string (file-length stream))))
+      (read-sequence buf stream)
+      buf)))
+
+(defun write-to-noscript-block (page entries)
+  (let* ((fragment (generate-html entries))
+	 (file-content (read-file-to-string page))
+	 (start-pos (or (search "<noscript>" file-content)
+			(error "Could not find opening tag in ~A" page)))
+	 (end-pos (or (search "</noscript>" file-content)
+		      (error "Could not find closing tag in ~A" page)))
+	 (insert-start (+ start-pos (length "<noscript>")))
+	 (before (subseq file-content 0 insert-start))
+	 (after (subseq file-content end-pos)))
+    (with-open-file (file page :direction :output :if-exists :supersede)
+      (write-string (concatenate 'string before fragment after) file))))
+
+(defun publish ()
+  (let ((records (getf (fetch-entries +user-did+
+				      +max-entries+) :records)))
+    (write-to-noscript-block #p"./index.html"
+			     records)
+    (git-add "index.html")
+    (git-commit "chore(ci): generate noscript fallback")
+    (git-push)))
