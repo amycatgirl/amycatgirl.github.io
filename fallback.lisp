@@ -17,11 +17,11 @@
 (defun keywordize (name)
   (intern (string-upcase name) "KEYWORD"))
 
-(defmacro get-in-plist (place indicators)
+(defmacro get-in (place indicators &key (accessor-fn 'getf))
   (let ((rev-indicators (reverse indicators)))
     (labels ((construct (y ys) (cond
-				 ((null ys) (list 'getf place y))
-				 (t (list 'getf (construct (car ys) (cdr ys)) y)))))
+				 ((null ys) (list accessor-fn place y))
+				 (t (list accessor-fn (construct (car ys) (cdr ys)) y)))))
       (construct (car rev-indicators) (cdr rev-indicators)))))
 
 ;; Git
@@ -103,10 +103,11 @@ Aditional query parameters in the request must be passed inside of `query', wher
 									   (:hour 2) #\: (:min 2)))))))
 
 (defun entry-element (entry)
-  (let ((title (get-in-plist entry (:value :title)))
-	(description (or (get-in-plist entry (:value :description)) ""))
-	(date (get-in-plist entry (:value :publishedat)))
-	(link "todo"))
+  (let ((title (get-in entry (:value :title)))
+	(description (or (get-in entry (:value :description)) ""))
+	(date (get-in entry (:value :publishedat)))
+	(link "todo")
+	(spinneret:*html-style* :tree))
     (spinneret:with-html-string
       (:div.entry
        (:a.base-anchor :href link
@@ -116,6 +117,4 @@ Aditional query parameters in the request must be passed inside of `query', wher
 	(published-at-element date))))))
 
 (defun generate-html (entries)
-  (mapcar #'entry-element entries))
-
-(defun publish ())
+  (format nil "~{~A~^\n~}" (mapcar #'entry-element entries)))
