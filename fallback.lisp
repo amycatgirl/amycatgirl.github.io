@@ -34,7 +34,7 @@
   (run-command `("git" "commit" "-m" ,(concatenate 'string "[fallback-gen] " message))))
 
 (defun git-push ()
-  (run-command '("git push")))
+  (run-command '("git" "push")))
 ;; HTTP
 (defun build-query-params-from-plist (parameters)
   "Build a string of URL-encoded query parameters from a plist."
