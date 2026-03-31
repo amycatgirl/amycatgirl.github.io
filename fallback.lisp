@@ -6,9 +6,12 @@
 
 (defconstant +user-did+ "did:plc:gijpvbkdbr56kazbdjhfvb3d"
   "DID of the user to fetch entries from")
-(defconstant +viewer+ "https://amybunny.leaflet.pub/~A"
-  "URL to standard.site compliant viewer. Default is leaflet.
-~A is passed to `format' with the CID of the record.")
+
+(defconstant +viewers+ '(("3mi2fpvnluk2b" . "https://amybunny.offprint.app~A")
+			 ("3mbpuyp4pqk2j" . "https://amybunny.leaflet.pub/~A"))
+  "An alist of publication keys -> URLs.
+~A is passed to `format' with the `path' of the record.")
+
 (defconstant +max-entries+ 5
   "Maximum amount of entries fetched.")
 
@@ -99,6 +102,11 @@ Aditional query parameters in the request must be passed inside of `query', wher
 		      :collection "site.standard.document"
 		      :limit maximum)))
 
+;; Standard.site
+(defun get-publication-rkey (site)
+  (car (last (uiop:split-string
+	       site :separator '(#\/)))))
+
 ;; Generator
 (defun published-at-element (date)
   (let ((time (local-time:parse-timestring date)))
@@ -111,7 +119,9 @@ Aditional query parameters in the request must be passed inside of `query', wher
   (let ((title (get-in entry (:value :title)))
 	(description (or (get-in entry (:value :description)) ""))
 	(date (get-in entry (:value :publishedat)))
-	(link (format nil +viewer+ (car (last (uiop:split-string (getf entry :uri) :separator '(#\/))))))
+	(link (format nil (cdr (assoc (get-publication-rkey (get-in entry (:value :site)))
+				      +viewers+ :test 'equal))
+		      (get-in entry (:value :path))))
 	(spinneret:*html-style* :tree))
     (spinneret:with-html-string
       (:div.entry
