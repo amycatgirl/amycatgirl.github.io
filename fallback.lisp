@@ -147,9 +147,11 @@ Aditional query parameters in the request must be passed inside of `query', wher
   (let ((records (getf (fetch-entries +user-did+
 				      +max-entries+) :records)))
     (write-to-noscript-block #p"./index.html"
-			     records)
-    (unwind-protect
-	 (progn (git-add "index.html")
-		(git-commit "chore(ci): generate noscript fallback")
-		(git-push))
-      (format t "Either:~%- There were no changes between runs~%-Creating a commit failed for some reason (check git status)~%- Or the current branch doesn't have an upstream~%2~Please try running the publishing steps manually or run the fallback script again"))))
+			     records))
+  (handler-case
+      (progn (git-add "index.html")
+	     (git-commit "generate noscript fallback")
+	     (git-push))
+    (t ()
+      (format t "Either:~%- There were no changes between runs~%- Creating a commit failed for some reason (check git status)~%- Or the current branch doesn't have an upstream~2%Please try running the publishing steps manually or run the fallback script again")
+      (uiop:quit 1))))
