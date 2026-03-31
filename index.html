@@ -34,7 +34,7 @@
             <li><span class="handle">@amybunny.01</span> on signal</li>
         </ul>
 
-        <p>i also have a blog on <a href="https://amybunny.leaflet.pub">leaflet</a>, here are it's latest entries:</p>
+        <p>i also have a blog on <a href="https://amybunny.leaflet.pub">leaflet</a> and <a href="https://amybunny.offprint.app">offprint</a>, here are it's latest entries:</p>
         <div id="atproto-leaflet">
           <noscript><div class="entry">
 			<a class="base-anchor" href="https://amybunny.leaflet.pub/3md2f4slp5c23">
@@ -205,79 +205,82 @@
     </template>
 
     <script type="module">
-        // First test if this browser supports templates
-        if (!"content" in document.createElement("template")) {
-            throw "This browser does not support HTML Template API, please update or change your browser."
-        }
+	// First test if this browser supports templates
+     if (!"content" in document.createElement("template")) {
+	 throw "This browser does not support HTML Template API, please update or change your browser."
+     }
+     
+     // Configuration options
+     const PUBLICATION_MAP = {
+	 "3mi2fpvnluk2b": "https://amybunny.offprint.app",
+	 "3mbpuyp4pqk2j": "https://amybunny.leaflet.pub/"
+     };
+     const COLLECTION_NSIDS = ["site.standard.document"];
+     const USER_DID = "did:plc:gijpvbkdbr56kazbdjhfvb3d";
+     const USER_PDS = "https://rose.madebydanny.uk";
+     const MAX_LATEST_POSTS = 5;
+     
+     // Definitions
+     /** @type {HTMLTemplateElement} */
+     const ENTRY_TEMPLATE = document.getElementById("leaflet-entry")
+     
+     const DATE_FORMATTER = new Intl.DateTimeFormat("en-GB", {
+	 timeStyle: "short",
+	 dateStyle: "short"
+     })
+     
+     /**
+      * @param {{ title: string, description: string, url: string, date: Date }} leaflet_entry
+      * @returns {HTMLDivElement}
+      */
+     function buildEntry(leaflet_entry) {
+	 const entry = document.importNode(ENTRY_TEMPLATE.content, true)
+	 entry.querySelector(".base-anchor").href = leaflet_entry.url;
+	 entry.querySelector(".title").textContent = leaflet_entry.title;
+	 const date_el = entry.querySelector(".published-at");
+	 date_el.datetime = leaflet_entry.date.toISOString();
+	 date_el.textContent = DATE_FORMATTER.format(leaflet_entry.date);
+	 entry.querySelector(".description").textContent = leaflet_entry.description;
+	 
+	 return entry;
+     }
+     
+     /**
+      * @param {string} nsid
+      * @returns {Promise<object>}
+      */
+     async function getLatestPosts(nsid) {
+	 const { records } = await (await fetch(`${USER_PDS}/xrpc/com.atproto.repo.listRecords?repo=${USER_DID}&collection=${nsid}&limit=${MAX_LATEST_POSTS}`)).json()
+	 
+	 return records.toReversed()
+     }
+     
+     // HTML
+     const leaflet_container = document.getElementById("atproto-leaflet");
+     
+     const posts = (await Promise.all(COLLECTION_NSIDS.map(async (nsid) => await getLatestPosts(nsid))))
+	 .flat(1)
+	 .sort((entry_a, entry_b) => {
+	     const date_a = new Date(entry_a.value.publishedAt)
+	     const date_b = new Date(entry_b.value.publishedAt)
+	     
+	     return date_b - date_a
+	 });
+     
+     for (const document of posts) {
+	 const { path, site, title, description, publication, publishedAt } = document.value;
+	 const publication_rkey = site.split("/").at(-1);
+	 const url_start = PUBLICATION_MAP[publication_rkey];
 
-        // Configuration options
-        const COLLECTION_NSIDS = ["site.standard.document"];
-        const USER_DID = "did:plc:gijpvbkdbr56kazbdjhfvb3d";
-        const USER_PDS = "https://rose.madebydanny.uk";
-        const MAX_LATEST_POSTS = 5;
-
-        // Definitions
-        /** @type {HTMLTemplateElement} */
-        const ENTRY_TEMPLATE = document.getElementById("leaflet-entry")
-
-        const DATE_FORMATTER = new Intl.DateTimeFormat("en-GB", {
-            timeStyle: "short",
-            dateStyle: "short"
-        })
-
-        /**
-         * @param {{ title: string, description: string, url: string, date: Date }} leaflet_entry
-         * @returns {HTMLDivElement}
-         */
-        function buildEntry(leaflet_entry) {
-            const entry = document.importNode(ENTRY_TEMPLATE.content, true)
-            entry.querySelector(".base-anchor").href = leaflet_entry.url;
-            entry.querySelector(".title").textContent = leaflet_entry.title;
-            const date_el = entry.querySelector(".published-at");
-            date_el.datetime = leaflet_entry.date.toISOString();
-            date_el.textContent = DATE_FORMATTER.format(leaflet_entry.date);
-            entry.querySelector(".description").textContent = leaflet_entry.description;
-
-            return entry;
-        }
-
-        /**
-         * @param {string} nsid
-         * @returns {Promise<object>}
-         */
-        async function getLatestPosts(nsid) {
-            const { records } = await (await fetch(`${USER_PDS}/xrpc/com.atproto.repo.listRecords?repo=${USER_DID}&collection=${nsid}&limit=${MAX_LATEST_POSTS}`)).json()
-
-            return records.toReversed()
-        }
-
-        // HTML
-        const leaflet_container = document.getElementById("atproto-leaflet");
-
-        const posts = (await Promise.all(COLLECTION_NSIDS.map(async (nsid) => await getLatestPosts(nsid))))
-                        .flat(1)
-                        .sort((entry_a, entry_b) => {
-                            const date_a = new Date(entry_a.value.publishedAt)
-                            const date_b = new Date(entry_b.value.publishedAt)
-
-                            console.log(date_a)
-                            console.log(date_b)
-
-                            return date_b - date_a
-                        });
-
-        for (const document of posts) {
-            const { title, description, publication, publishedAt } = document.value;
-    
-            // TODO: make platform agnostic
-            leaflet_container.append(buildEntry({
-                title: document.value.title,
-                description: document.value.description,
-                url: `https://amybunny.leaflet.pub/${document.uri.split("/").at(-1)}`,
-                date: new Date(publishedAt)
-            }))
-        }
-
+	 
+	 // TODO: make platform agnostic
+	 leaflet_container.append(buildEntry({
+	     title: document.value.title,
+	     description: document.value.description,
+	     url: url_start + path,
+	     date: new Date(publishedAt)
+	 }))
+     } 
     </script>
 </body>
 
