@@ -33,7 +33,7 @@
   "Parse a jsonl file. `DOCUMENT' here refers to the file being
 parsed. See https://jsonlines.org/ for spec."
   (loop for line from (uiop:split-string file :separator '(\#newline))
-	collecting (yason:parse-json line :object-as :plist :object-key-fn #'keywordize)))
+	collecting (yason:parse line :object-as :plist :object-key-fn #'keywordize)))
 
 ;; Git
 (defun git-add (&rest files)
