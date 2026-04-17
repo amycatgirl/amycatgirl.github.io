@@ -29,6 +29,12 @@
 				 (t (list accessor-fn (construct (car ys) (cdr ys)) y)))))
       (construct (car rev-indicators) (cdr rev-indicators)))))
 
+(defun parse-json-lines (file)
+  "Parse a jsonl file. `DOCUMENT' here refers to the file being
+parsed. See https://jsonlines.org/ for spec."
+  (loop for line from (uiop:split-string file :separator '(\#newline))
+	collecting (yason:parse-json line :object-as :plist :object-key-fn #'keywordize)))
+
 ;; Git
 (defun git-add (&rest files)
   (run-command `("git" "add" ,@files)))
@@ -61,19 +67,46 @@
 (defun resolve-did-document--plc (did)
   (make-request (format nil "https://plc.directory/~a" did)))
 
+(defun did->https (did)
+  "Convert `did' to a proper http form."
+  (let* ((method (get-did-method did))
+	 (loq (document-location (subseq did (length (format nil "did:~A:" method))))))
+    (concatenate 'string
+		 "https://"
+		 loq)))
+
 (defun resolve-did-document--web (did)
   "Resolve a DID document via DID:WEB method.
-See https://w3c-ccg.github.io/did-method-web/ for specification details."
-  (let* ((document-location (subseq did (length "did:web:")))
-	 (qualified-path (concatenate 'string "https://" document-location "/.well-known/did.json"))
+See https://w3c-ccg.github.io/did-method-web/ for specification
+details."
+  (let* ((qualified-path (concatenate 'string (did->http did) "/.well-known/did.json"))
 	 (document (make-request qualified-path)))
     (if (equal (getf document :id) did)
 	document
 	(error "Could not resolve document from did:web ~S" did))))
 
+(defun webvh-get-latest-document-unsafe (log)
+  "Get the latest DID document from the provided webvh `LOG'.
+Does not ensure integrity and does not process the entire log in order."
+  (getf :state (last log)))
+
+(defun resolve-did-document--webvh (did)
+  "Resolve a DID document via did:webvh method. This is not up to spec,
+it does not check whether the encoded path is valid.
+See https://identity.foundation/didwebvh/v1.0/#read-resolve for spec
+details."
+  (let* ((qualified-path (concatenate 'string
+				      "https://"
+				      (did->http did)
+				      "/.well-known/did.jsonl"))
+	 (log-json-lines (make-request qualified-path))
+	 (log (parse-json-lines log-json-lines)))
+    (webvh-get-latest-document-unsafe log)))
+
 (defun get-did-method (did)
-  (cl-ppcre:register-groups-bind (method) ("^did:([a-z]+):[a-zA-Z0-9._:%-]*[a-zA-Z0-9._-]$" did)
-   method))
+  (cl-ppcre:register-groups-bind (method)
+				 ("^did:([a-z]+):[a-zA-Z0-9._:%-]*[a-zA-Z0-9._-]$" did)
+				 method))
 
 (defun resolve-pds (did)
   "Resolve a PDS by DID."
@@ -81,6 +114,7 @@ See https://w3c-ccg.github.io/did-method-web/ for specification details."
 	 (document (case did-method
 		     ("web" (resolve-did-document--web did))
 		     ("plc" (resolve-did-document--plc did))
+		     ("webvh" (resolve-did-document-webvh did))
 		     (_ (error "Unsuported DID method ~S" did-method))))
 	 (services (getf document :service)))
     (getf (find-if (lambda (service)
