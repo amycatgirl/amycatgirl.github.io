@@ -2,7 +2,7 @@
 ;; Last authored: Thu 19 Mar 18:41:03 AST 2026
 ;; Depends on: drakma, yason, uiop, cl-ppcre, trivia, alexandria, spinneret, local-time
 
-(ql:quickload '(drakma yason uiop cl-ppcre trivia alexandria spinneret local-time))
+(ql:quickload '(drakma yason uiop cl-ppcre alexandria spinneret local-time))
 
 (defconstant +user-did+ "did:plc:gijpvbkdbr56kazbdjhfvb3d"
   "DID of the user to fetch entries from")
@@ -78,7 +78,7 @@ See https://w3c-ccg.github.io/did-method-web/ for specification details."
 (defun resolve-pds (did)
   "Resolve a PDS by DID."
   (let* ((did-method (get-did-method did))
-	 (document (trivia:match did-method
+	 (document (case did-method
 		     ("web" (resolve-did-document--web did))
 		     ("plc" (resolve-did-document--plc did))
 		     (_ (error "Unsuported DID method ~S" did-method))))
