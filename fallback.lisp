@@ -70,7 +70,7 @@ parsed. See https://jsonlines.org/ for spec."
 (defun did->https (did)
   "Convert `did' to a proper http form."
   (let* ((method (get-did-method did))
-	 (loq (document-location (subseq did (length (format nil "did:~A:" method))))))
+	 (loq (subseq did (length (format nil "did:~A:" method)))))
     (concatenate 'string
 		 "https://"
 		 loq)))
@@ -79,7 +79,7 @@ parsed. See https://jsonlines.org/ for spec."
   "Resolve a DID document via DID:WEB method.
 See https://w3c-ccg.github.io/did-method-web/ for specification
 details."
-  (let* ((qualified-path (concatenate 'string (did->http did) "/.well-known/did.json"))
+  (let* ((qualified-path (concatenate 'string (did->https did) "/.well-known/did.json"))
 	 (document (make-request qualified-path)))
     (if (equal (getf document :id) did)
 	document
@@ -88,7 +88,7 @@ details."
 (defun webvh-get-latest-document-unsafe (log)
   "Get the latest DID document from the provided webvh `LOG'.
 Does not ensure integrity and does not process the entire log in order."
-  (getf :state (last log)))
+  (getf (last log) :state))
 
 (defun resolve-did-document--webvh (did)
   "Resolve a DID document via did:webvh method. This is not up to spec,
@@ -96,8 +96,7 @@ it does not check whether the encoded path is valid.
 See https://identity.foundation/didwebvh/v1.0/#read-resolve for spec
 details."
   (let* ((qualified-path (concatenate 'string
-				      "https://"
-				      (did->http did)
+				      (did->https did)
 				      "/.well-known/did.jsonl"))
 	 (log-json-lines (make-request qualified-path))
 	 (log (parse-json-lines log-json-lines)))
@@ -114,7 +113,7 @@ details."
 	 (document (case did-method
 		     ("web" (resolve-did-document--web did))
 		     ("plc" (resolve-did-document--plc did))
-		     ("webvh" (resolve-did-document-webvh did))
+		     ("webvh" (resolve-did-document--webvh did))
 		     (_ (error "Unsuported DID method ~S" did-method))))
 	 (services (getf document :service)))
     (getf (find-if (lambda (service)
