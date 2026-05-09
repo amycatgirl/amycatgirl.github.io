@@ -4,23 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>amy's website</title>
+    <title>bunnies in space</title>
     <link rel="icon" href="/favicon.jpg" />
+    <meta name="og:title" content="bunnies in space" />
+    <meta name="og:description" content="amelia's personal website" />
+    <meta name="og:url" content="https://bunniesin.space/" />
 </head>
 
 <body>
     <main>
-        <h1>i'm amy</h1>
-        <p>i am a frontend developer that currently works for: [no one]</p>
-        <p>currently aiding <a href="https://github.com/stoatchat">stoat.chat</a> with fixing bugs and cosplaying as a
-            support agent</p>
+        <h1>i'm amelia</h1>
+        <p>i am a frontend developer and a wanna-be-lisper.</p>
 
-        <p>i can work with javascript and typescript. but i am a quick learner, and have worked with python, kotlin,
-            java, nix, clojure, and lisp dialects like common lisp and scheme.</p>
-        <h2>my projects</h2>
+        <p>i can work with javascript, typescript, common lisp and clojure. but i am a quick learner, and have previously worked with python, kotlin,
+            java, nix, and other lisp dialects like guile scheme.</p>
+        <h2>projects</h2>
         <ul>
-            <li><a href="https://github.com/amycatgirl/codehub">codehub</a> (go)</li>
-            <li><a href="https://github.com/amycatgirl/tempstore">tempstore</a> (typescript)</li>
+            <li>atproto explorations (multiple languages, wip)</li>
+            <li><a href="#">bunniesin.space</a> (common lisp + html)</li>
+            <li><a href="https://tangled.org/bunniesin.space/sand-go">sand-go</a> (go)</li>
+            <li><a href="https://github.com/amycatgirl/codehub">codehub</a> (go, wip)</li>
+            <li><a href="https://github.com/amycatgirl/tempstore">tempstore</a> (typescript, mid-rewrite)</li>
             <li><a href="https://github.com/amycatgirl/clordle">clordle</a> (clojure)</li>
             <li><a href="https://github.com/upryzing/crescent">crescent</a> (kotlin, unmaintained)</li>
         </ul>
@@ -29,13 +33,20 @@
         <ul>
             <li><a class="handle" rel="me" href="https://github.com/amycatgirl">@amycatgirl</a> on github</li>
             <li><a class="handle" rel="me"
-                    href="https://bsky.app/profile/did:plc:gijpvbkdbr56kazbdjhfvb3d">@amybunny.tgirl.gay</a> on atproto
+                    href="https://bsky.app/profile/did:plc:gijpvbkdbr56kazbdjhfvb3d">@bunniesin.space</a> on atproto
             </li>
             <li><span class="handle">@amybunny.01</span> on signal</li>
         </ul>
 
-        <p>i also have a blog on <a href="https://amybunny.leaflet.pub">leaflet</a> and <a href="https://amybunny.offprint.app">offprint</a>, here are it's latest entries:</p>
+        <p>i also have a blog on <a href="https://amybunny.offprint.app">offprint</a>, here are it's latest entries:</p>
         <div id="atproto-leaflet">
+            <!-- The reason we have aria-hidden in these prompts is that text-only browsers usually do not parse css, but respect aria-hidden instead. -->
+            <!-- These are purely decorative though, so it's probably fine to hide them from screen-readers too?-->
+            <div id="loading" class="hidden" aria-hidden="true"><span>loading...</span></div>
+            <div id="update-browser-prompt" class="hidden" aria-hidden="true">
+                <p>your browser does not support html templates</p>
+                <p>please update your browser to the latest version</p>
+            </div>
           <noscript>
 <div class=entry>
  <a class=base-anchor
@@ -122,19 +133,24 @@
 </div>
 </noscript>
         </div>
+
+        <footer>
+            <p>source code: <a href="https://tangled.org/bunniesin.space/website">bunniesin.space/website</a></p>
+        </footer>
     </main>
-    <div class="margin-wrapper">
-        <div class="margin"></div>
-    </div>
 
     <style>
         @import url("/assets/iosevka/Iosevka.css");
+        @import url("/assets/iosevka_aile/IosevkaAile.css");
 
         :root {
-            --font: "Iosevka";
-            --bg: #fbf8ef;
-            --fg: #655370;
-            --emphasis: #3a81c3;
+            color-scheme: light dark;
+            --f-mono: "Iosevka";
+            --f-sans: "Iosevka Aile";
+            --c-bg: light-dark(#fcf7f3, #262622);
+            --c-fg: light-dark(#262622, #fcf7f3);
+            --c-outline: light-dark(#23231f, #ece0d7);
+            --c-emphasis: light-dark(#7c0b65, #f65fd6);
         }
 
         body {
@@ -143,21 +159,25 @@
             overflow-y: scroll;
             min-height: 100vh;
             display: grid;
-            grid-template-areas: "content margin";
-            grid-template-columns: minmax(435px, 50%) 1fr;
+            grid-template-areas: ". content .";
+            grid-template-columns: 1fr 70ch  1fr;
 
-            background-color: var(--bg);
-            color: var(--fg);
-            font-family: var(--font);
+            padding-bottom: 1.5rem;
+
+            background-color: var(--c-bg);
+            color: var(--c-fg);
+            font-family: var(--f-sans), sans-serif;
         }
 
         p {
             text-wrap: pretty;
+            font-size: var(--f-sans), sans-serif;
         }
 
         main {
             z-index: 2;
             grid-area: content;
+            max-width: 60ch;
         }
 
         ul {
@@ -166,26 +186,7 @@
 
         li::marker {
             content: "* ";
-        }
-
-        .margin-wrapper {
-            z-index: 1;
-            grid-area: margin;
-            display: grid;
-            grid-template-areas: ". right";
-            grid-template-columns: 2fr .5fr;
-        }
-
-        .margin {
-            position: relative;
-            grid-area: right;
-            height: 105%;
-            top: -3%;
-            width: 10rem;
-
-            border-right: 50px var(--fg);
-            border-right-style: dotted;
-            opacity: .1;
+            font-family: var(--f-mono), monospace;
         }
 
         h1 {
@@ -193,10 +194,10 @@
         }
 
         a {
-            color: var(--emphasis);
+            color: var(--c-emphasis);
 
             & h3 {
-                color: var(--fg);
+                color: var(--c-fg);
             }
         }
 
@@ -205,11 +206,12 @@
             position: relative;
 
             padding: 5px 10px;
-            border: 1px solid black;
-            &:not(:first-child) { margin-top: .5rem; }
+            outline: 2px solid var(--c-outline);
+            &:not(:first-child) { margin-top: 1rem; }
 
             & .base-anchor {
                 position: static;
+                text-decoration: none;
 
                 &::before {
                     content: "";
@@ -223,39 +225,31 @@
                 }
 
                 &::after {
-                    content: url("data:image/svg+xml,%3Csvg viewBox='0 0 7 7' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.04261 6.80966L0.377841 6.14489L5.32102 1.19318H1.50284L1.51136 0.272727H6.90625V5.67614H5.97727L5.9858 1.85795L1.04261 6.80966Z' fill='black'/%3E%3C/svg%3E%0A");
+                    content: '🡕';
                     position: absolute;
                     display: block;
                     bottom: 1rem;
                     right: 1rem;
                     width: 12px;
                     height: 12px;
+
+                    color: var(--c-outline);
                 }
             }
 
             & .title {
                 margin-top: 5px;
-                text-decoration: underline;
             }
         }
 
-        @media screen and (max-width: 653px) {
-            body {
-                grid-template-areas:
-                    "content"
-                    "margin";
-
-                grid-template-columns: 100%;
-            }
-
-            main {
-                margin-inline: 1rem;
-            }
-
-            .margin-wrapper {
-                display: none;
-            }
+        time {
+            font-family: var(--f-mono), monospace;
         }
+
+        footer { opacity: .3;}
+
+        /* hide elements that are interactively shown */
+        .hidden { display: none; }
     </style>
 
     <template id="leaflet-entry">
@@ -273,13 +267,16 @@
     <script type="module">
 	// First test if this browser supports templates
      if (!"content" in document.createElement("template")) {
-	 throw "This browser does not support HTML Template API, please update or change your browser."
+         document.getElementById("update-browser-prompt").classList.remove("hidden");
+         throw "This browser does not support HTML Template API, please update or change your browser."
      }
+
+
      
      // Configuration options
      const PUBLICATION_MAP = {
-	 "3mi2fpvnluk2b": "https://amybunny.offprint.app",
-	 "3mbpuyp4pqk2j": "https://amybunny.leaflet.pub/"
+	    "3mi2fpvnluk2b": "https://amybunny.offprint.app",
+	    "3mbpuyp4pqk2j": "https://amybunny.leaflet.pub/"
      };
      const COLLECTION_NSIDS = ["site.standard.document"];
      const USER_DID = "did:plc:gijpvbkdbr56kazbdjhfvb3d";
@@ -291,8 +288,8 @@
      const ENTRY_TEMPLATE = document.getElementById("leaflet-entry")
      
      const DATE_FORMATTER = new Intl.DateTimeFormat("en-GB", {
-	 timeStyle: "short",
-	 dateStyle: "short"
+	    timeStyle: "short",
+	    dateStyle: "short"
      })
      
      /**
@@ -300,15 +297,15 @@
       * @returns {HTMLDivElement}
       */
      function buildEntry(leaflet_entry) {
-	 const entry = document.importNode(ENTRY_TEMPLATE.content, true)
-	 entry.querySelector(".base-anchor").href = leaflet_entry.url;
-	 entry.querySelector(".title").textContent = leaflet_entry.title;
-	 const date_el = entry.querySelector(".published-at");
-	 date_el.datetime = leaflet_entry.date.toISOString();
-	 date_el.textContent = DATE_FORMATTER.format(leaflet_entry.date);
-	 entry.querySelector(".description").textContent = leaflet_entry.description;
+	    const entry = document.importNode(ENTRY_TEMPLATE.content, true)
+	    entry.querySelector(".base-anchor").href = leaflet_entry.url;
+	    entry.querySelector(".title").textContent = leaflet_entry.title;
+	    const date_el = entry.querySelector(".published-at");
+	    date_el.datetime = leaflet_entry.date.toISOString();
+	    date_el.textContent = DATE_FORMATTER.format(leaflet_entry.date);
+	    entry.querySelector(".description").textContent = leaflet_entry.description;
 	 
-	 return entry;
+	    return entry;
      }
      
      /**
@@ -316,14 +313,15 @@
       * @returns {Promise<object>}
       */
      async function getLatestPosts(nsid) {
-	 const { records } = await (await fetch(`${USER_PDS}/xrpc/com.atproto.repo.listRecords?repo=${USER_DID}&collection=${nsid}&limit=${MAX_LATEST_POSTS}`)).json()
-	 
-	 return records.toReversed()
+         const { records } = await (await fetch(`${USER_PDS}/xrpc/com.atproto.repo.listRecords?repo=${USER_DID}&collection=${nsid}&limit=${MAX_LATEST_POSTS}`)).json()
+
+         return records.toReversed()
      }
      
      // HTML
      const leaflet_container = document.getElementById("atproto-leaflet");
-     
+
+     document.getElementById('loading').classList.toggle('hidden');
      const posts = (await Promise.all(COLLECTION_NSIDS.map(async (nsid) => await getLatestPosts(nsid))))
 	 .flat(1)
 	 .sort((entry_a, entry_b) => {
@@ -334,19 +332,20 @@
 	 });
      
      for (const document of posts) {
-	 const { path, site, title, description, publication, publishedAt } = document.value;
-	 const publication_rkey = site.split("/").at(-1);
-	 const url_start = PUBLICATION_MAP[publication_rkey];
+         const { path, site, title, description, publication, publishedAt } = document.value;
+         const publication_rkey = site.split("/").at(-1);
+         const url_start = PUBLICATION_MAP[publication_rkey];
 
-	 
-	 // TODO: make platform agnostic
-	 leaflet_container.append(buildEntry({
-	     title: document.value.title,
-	     description: document.value.description,
-	     url: url_start + path,
-	     date: new Date(publishedAt)
-	 }))
-     } 
+
+         leaflet_container.append(buildEntry({
+             title,
+             description,
+             url: url_start + path,
+             date: new Date(publishedAt)
+         }))
+     }
+
+     document.getElementById('loading').classList.toggle('hidden');
     </script>
 </body>
 
