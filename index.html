@@ -21,7 +21,7 @@
         <h2>projects</h2>
         <ul>
             <li>atproto explorations (multiple languages, wip)</li>
-            <li><a href="#">bunniesin.space</a> (common lisp + html)</li>
+            <li><a href="https://tangled.org/bunniesin.space/website">bunniesin.space</a> (common lisp + html)</li>
             <li><a href="https://tangled.org/bunniesin.space/sand-go">sand-go</a> (go)</li>
             <li><a href="https://github.com/amycatgirl/codehub">codehub</a> (go, wip)</li>
             <li><a href="https://github.com/amycatgirl/tempstore">tempstore</a> (typescript, mid-rewrite)</li>
@@ -171,13 +171,13 @@
 
         p {
             text-wrap: pretty;
-            font-size: var(--f-sans), sans-serif;
+            font-family: var(--f-sans), sans-serif;
         }
 
         main {
             z-index: 2;
             grid-area: content;
-            max-width: 60ch;
+            max-width: min(60ch, 100vw);
         }
 
         ul {
@@ -201,7 +201,21 @@
             }
         }
 
+
+
+        div#atproto-leaflet {
+            display: flex;
+            flex-direction: column;
+            container-type: inline-size;
+
+            @container (width < 600px) {
+                .entry {
+                    max-width: calc(100vw - 2rem);
+                }
+            }
+        }
         .entry {
+            transition: width .1s linear;
             box-sizing: border-box;
             position: relative;
 
