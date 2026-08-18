@@ -59,7 +59,7 @@ ul {
 
 h1 {
     font-weight: 800;
-    font-family: var(--f-heading);
+    font-family: var(--f-heading), sans-serif;
 }
 
 a {
@@ -118,7 +118,7 @@ div#atproto-leaflet {
 
     & .title {
         margin-top: 5px;
-        font-family: var(--f-heading);
+        font-family: var(--f-heading), sans-serif;
     }
 }
 
