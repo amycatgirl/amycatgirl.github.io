@@ -27,15 +27,15 @@
 }
 
 body {
-    margin-block: 0;
     overflow-x: hidden;
     overflow-y: scroll;
     min-height: 100vh;
-    display: grid;
-    grid-template-areas: ". content .";
-    grid-template-columns: 1fr 70ch 1fr;
+    display: flex;
+    justify-content: center;
 
     padding-bottom: 1.5rem;
+    padding-inline: .4rem;
+    margin-block: 0;
 
     background-color: var(--c-bg);
     color: var(--c-fg);
@@ -44,13 +44,13 @@ body {
 
 p {
     text-wrap: pretty;
+    overflow-wrap: break-word;
     font-family: var(--f-body), sans-serif;
 }
 
 main {
     z-index: 2;
-    grid-area: content;
-    max-width: min(60ch, 100vw);
+    max-width: 70ch;
 }
 
 ul {
@@ -74,12 +74,6 @@ div#atproto-leaflet {
     display: flex;
     flex-direction: column;
     container-type: inline-size;
-
-    @container (width < 600px) {
-        .entry {
-            max-width: calc(100vw - 2rem);
-        }
-    }
 }
 
 .entry {
@@ -125,15 +119,6 @@ div#atproto-leaflet {
 @media screen and (width > 500px) {
     .wave-on-desktop::before {
         content: "👋 ";
-    }
-}
-
-@media screen and (width < 800px) {
-    body {
-        padding-inline: 0;
-        margin-inline: 1rem;
-        display: block;
-        width: 100vw;
     }
 }
 
