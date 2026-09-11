@@ -48,14 +48,17 @@ parsed. See https://jsonlines.org/ for spec."
 (defun make-request (where)
   (let ((stream (drakma:http-request where
 				     :want-stream t
-				     :user-agent "amycatgirl.github.io/1.0")))
+				     :user-agent "amycatgirl.github.io/1.0"
+				     :headers '(("Content-Type" . "application/json")))))
     (setf (flexi-streams:flexi-stream-external-format stream) :utf-8)
     (yason:parse stream :object-as :plist :object-key-fn #'keywordize)))
 
 ;; ATProto
 ;;; DID
 (defun resolve-did-document--plc (did)
-  (make-request (format nil "https://plc.directory/~a" did)))
+  (let ((doc (make-request (format nil "https://plc.directory/~a" did))))
+    (format t "PLC DID Document: ~A~%" doc)
+    doc))
 
 (defun get-did-method (did)
   (cl-ppcre:register-groups-bind (method)
