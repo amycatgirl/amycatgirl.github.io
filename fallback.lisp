@@ -7,8 +7,10 @@
 (defconstant +user-did+ "did:plc:gijpvbkdbr56kazbdjhfvb3d"
   "DID of the user to fetch entries from")
 
-(defconstant +viewers+ '(("3mi2fpvnluk2b" . "https://amybunny.offprint.app~A")
-			 ("3mbpuyp4pqk2j" . "https://amybunny.leaflet.pub/~A"))
+(defconstant +viewers+
+  '(("3mi2fpvnluk2b" . "https://amybunny.offprint.app~A")
+	  ("3mbpuyp4pqk2j" . "https://amybunny.leaflet.pub/~A")
+    ("3mpwlmgh3r4yy" . "https://bun.pckt.blog/~A"))
   "An alist of publication keys -> URLs.
 ~A is passed to `format' with the `path' of the record.")
 
@@ -16,9 +18,6 @@
   "Maximum amount of entries fetched.")
 
 ;; utilities
-(defmacro run-command (command)
-  `(uiop:run-program ,command :output '(:string :stripped t)))
-
 (defun keywordize (name)
   (intern (string-upcase name) "KEYWORD"))
 
@@ -187,14 +186,6 @@ Aditional query parameters in the request must be passed inside of `query', wher
       (write-string (concatenate 'string before fragment after) file))))
 
 (defun publish ()
-  (let ((records (getf (fetch-entries +user-did+
-				      +max-entries+) :records)))
-    (write-to-noscript-block #p"./index.html"
-			     records))
-  (handler-case
-      (progn (git-add "index.html")
-	     (git-commit "generate noscript fallback")
-	     (git-push))
-    (t ()
-      (format t "Either:~%- There were no changes between runs~%- Creating a commit failed for some reason (check git status)~%- Or the current branch doesn't have an upstream~2%Please try running the publishing steps manually or run the fallback script again")
-      (uiop:quit 1))))
+  (let ((records (getf (fetch-entries +user-did+ +max-entries+) :records)))
+    (write-to-noscript-block
+      #p"./index.html" records)))
