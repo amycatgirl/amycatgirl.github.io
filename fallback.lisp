@@ -100,16 +100,16 @@ details."
 (defun resolve-pds (did)
   "Resolve a PDS by DID."
   (let* ((did-method (get-did-method did))
-	 (document (case did-method
-		     ("web" (resolve-did-document--web did))
-		     ("plc" (resolve-did-document--plc did))
-		     ("webvh" (resolve-did-document--webvh did))
-		     (_ (error "Unsuported DID method ~S, supplied: ~S" did-method did))))
-	 (services (getf document :service)))
-    (getf (find-if (lambda (service)
-		     (equal (getf service :id) "#atproto_pds"))
-		   services)
-	  :serviceEndpoint)))
+      	 (document (case did-method
+      		     ("web" (resolve-did-document--web did))
+      		     ("plc" (resolve-did-document--plc did))
+      		     ("webvh" (resolve-did-document--webvh did))
+      		     (_ (error "Unsuported DID method ~S, supplied: ~S" did-method did))))
+      	 (services (getf document :service)))
+    (or (getf (find-if (lambda (service)
+            (equal (getf service :id) "#atproto_pds"))
+          services)
+	  :serviceEndpoint) (error "Missing service endpoint #atproto_pds in ~A" services))))
 
 ;;; PDS
 (defun make-pds-request (pds method &rest query)
