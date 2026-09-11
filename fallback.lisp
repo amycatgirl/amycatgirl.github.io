@@ -34,15 +34,6 @@ parsed. See https://jsonlines.org/ for spec."
   (loop for line from (uiop:split-string file :separator '(\#newline))
 	collecting (yason:parse line :object-as :plist :object-key-fn #'keywordize)))
 
-;; Git
-(defun git-add (&rest files)
-  (run-command `("git" "add" ,@files)))
-
-(defun git-commit (message)
-  (run-command `("git" "commit" "-m" ,(concatenate 'string "[fallback-gen] " message))))
-
-(defun git-push ()
-  (run-command '("git" "push")))
 ;; HTTP
 (defun build-query-params-from-plist (parameters)
   "Build a string of URL-encoded query parameters from a plist."
@@ -65,6 +56,11 @@ parsed. See https://jsonlines.org/ for spec."
 ;;; DID
 (defun resolve-did-document--plc (did)
   (make-request (format nil "https://plc.directory/~a" did)))
+
+(defun get-did-method (did)
+  (cl-ppcre:register-groups-bind (method)
+				 ("^did:([a-z]+):[a-zA-Z0-9._:%-]*[a-zA-Z0-9._-]$" did)
+				 method))
 
 (defun did->https (did)
   "Convert `did' to a proper http form."
@@ -100,11 +96,6 @@ details."
 	 (log-json-lines (make-request qualified-path))
 	 (log (parse-json-lines log-json-lines)))
     (webvh-get-latest-document-unsafe log)))
-
-(defun get-did-method (did)
-  (cl-ppcre:register-groups-bind (method)
-				 ("^did:([a-z]+):[a-zA-Z0-9._:%-]*[a-zA-Z0-9._-]$" did)
-				 method))
 
 (defun resolve-pds (did)
   "Resolve a PDS by DID."
