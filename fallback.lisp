@@ -49,7 +49,7 @@ parsed. See https://jsonlines.org/ for spec."
   (let ((stream (drakma:http-request where
 				     :want-stream t
 				     :user-agent "amycatgirl.github.io/1.0"
-				     :headers '(("Content-Type" . "application/json")))))
+				     :accept "application/json")))
     (setf (flexi-streams:flexi-stream-external-format stream) :utf-8)
     (yason:parse stream :object-as :plist :object-key-fn #'keywordize)))
 
