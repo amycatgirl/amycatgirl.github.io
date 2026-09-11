@@ -100,11 +100,13 @@ details."
 (defun resolve-pds (did)
   "Resolve a PDS by DID."
   (let* ((did-method (get-did-method did))
-      	 (document (case did-method
-      		     ("web" (resolve-did-document--web did))
-      		     ("plc" (resolve-did-document--plc did))
-      		     ("webvh" (resolve-did-document--webvh did))
-      		     (_ (error "Unsuported DID method ~S, supplied: ~S" did-method did))))
+      	 (document (or
+        	           (case did-method
+              		     ("web" (resolve-did-document--web did))
+              		     ("plc" (resolve-did-document--plc did))
+              		     ("webvh" (resolve-did-document--webvh did))
+              		     (_ (error "Unsuported DID method ~S, supplied: ~S" did-method did)))
+      	             (error "Could not fetch document for did ~S using method ~S" did method)))
       	 (services (getf document :service)))
     (or (getf (find-if (lambda (service)
             (equal (getf service :id) "#atproto_pds"))
@@ -160,12 +162,14 @@ Aditional query parameters in the request must be passed inside of `query', wher
 (defun read-file-to-string (path)
   (with-open-file (stream path :direction :input :if-does-not-exist :error)
     (let ((buf (make-string (file-length stream))))
-      (read-sequence buf stream)
-      buf)))
+      (read-sequence buf strea(or
+                       )
+              buf)))
 
-(defun write-to-noscript-block (page entries)
-  (let* ((fragment (generate-html entries))
-	 (file-content (read-file-to-string page))
+        (defun write-to-noscript-block (page entries)
+          (let* ((fragment (generate-html entries))
+        	 (file-content (read-file-to-string page)
+        	                 (error "Could not fetch document for did ~S using method ~S" did method)))
 	 (start-pos (or (search "<noscript>" file-content)
 			(error "Could not find opening tag in ~A" page)))
 	 (end-pos (or (search "</noscript>" file-content)
