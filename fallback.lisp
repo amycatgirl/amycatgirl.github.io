@@ -48,7 +48,7 @@ parsed. See https://jsonlines.org/ for spec."
 (defun make-request (where)
   (let ((stream (drakma:http-request where
 				     :want-stream t
-				     :user-agent " amycatgirl.github.io/1.0")))
+				     :user-agent "amycatgirl.github.io/1.0")))
     (setf (flexi-streams:flexi-stream-external-format stream) :utf-8)
     (yason:parse stream :object-as :plist :object-key-fn #'keywordize)))
 
@@ -104,7 +104,7 @@ details."
 		     ("web" (resolve-did-document--web did))
 		     ("plc" (resolve-did-document--plc did))
 		     ("webvh" (resolve-did-document--webvh did))
-		     (_ (error "Unsuported DID method ~S" did-method))))
+		     (_ (error "Unsuported DID method ~S, supplied: ~S" did-method did))))
 	 (services (getf document :service)))
     (getf (find-if (lambda (service)
 		     (equal (getf service :id) "#atproto_pds"))
